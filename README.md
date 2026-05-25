@@ -1,6 +1,6 @@
 # 🏡 Dotfiles — Angel Altuve
 
-[🇪🇸 Español](README.es.md)
+[🇪🇸 Español](README.es.md) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 My personal Linux configurations, managed with **GNU Stow**.
 
@@ -17,7 +17,7 @@ Each program lives in its own directory and gets deployed via Stow:
 ├── nvim/        →  ~/.config/nvim
 ├── zsh/         →  ~/.config/zsh
 ├── waybar/      →  ~/.config/waybar
-├── home/        →  ~/.zshenv  ~/.profile
+├── home/        →  ~/.zshenv
 └── ...
 ```
 
@@ -58,5 +58,3 @@ stow */
 | **Dev** | Pandoc, Lazygit, Mise, Calcurse |
 | **AUR** | Paru, Yay |
 | **System** | Btop, Htop, Fastfetch, Eza, Zathura |
-
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
