@@ -1,5 +1,7 @@
 # 🏡 Dotfiles — Angel Altuve
 
+[🇪🇸 Español](README.es.md)
+
 My personal Linux configurations, managed with **GNU Stow**.
 
 ![Screenshot](assets/screenshot.png)
@@ -56,3 +58,5 @@ stow */
 | **Dev** | Pandoc, Lazygit, Mise, Calcurse |
 | **AUR** | Paru, Yay |
 | **System** | Btop, Htop, Fastfetch, Eza, Zathura |
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)

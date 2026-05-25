@@ -56,3 +56,5 @@ stow */
 | **Dev** | Pandoc, Lazygit, Mise, Calcurse |
 | **AUR** | Paru, Yay |
 | **Sistema** | Btop, Htop, Fastfetch, Eza, Zathura |
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
