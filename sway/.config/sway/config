@@ -95,6 +95,9 @@ for_window [app_id = "lxappearance"] floating enable, resize set width 50 ppt he
 for_window [app_id = "pavucontrol"] floating enable, resize set width 40 ppt height 50 ppt, move position center
 for_window [app_id = "pcmanfm"] floating enable, resize set width 80 ppt height 80 ppt, move position center
 for_window [app_id = "polkit-gnome-authentication-agent-1"] floating enable, resize set width 45 ppt height 25 ppt, move position center
+for_window [app_id = "impala"] floating enable, resize set width 60 ppt height 80 ppt, move position center
+for_window [app_id = "wiremix"] floating enable, resize set width 60 ppt height 80 ppt, move position center
+for_window [app_id = "yay"] floating enable, resize set width 60 ppt height 80 ppt, move position center
 
 # Browser and file dialog specific rules
 for_window [title = "LibreWolf - Sharing Indicator"] floating enable

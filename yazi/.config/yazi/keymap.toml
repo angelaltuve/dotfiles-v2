@@ -197,6 +197,9 @@ prepend_keymap = [
 	{ on = ["b", "d"],  run = "delete", desc = "Delete bookmark" },
 	{ on = ["b", "D"],  run = "delete_all", desc = "Delete all" },
 
+	# Wallpaper
+	{ on = "W", run = "shell -- wallpaper-set %h", desc = "Set as wallpaper" },
+
 	# Recycle bin
 	{ on = ["R","o"], run = "plugin recycle-bin -- open",        desc = "Open trash" },
 	{ on = ["R","e"], run = "plugin recycle-bin -- empty",       desc = "Empty trash" },
