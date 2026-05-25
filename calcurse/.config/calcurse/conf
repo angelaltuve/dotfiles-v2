@@ -1,0 +1,129 @@
+#
+# Calcurse configuration file
+#
+
+# ─── Appearance ────────────────────────────────────────────────────────────────
+
+# Calendar view: monthly (default) or weekly
+appearance.calendarview=monthly
+
+# Compact panels (no borders): yes or no
+appearance.compactpanels=no
+
+# Default panel on startup: calendar, appointments or todo
+appearance.defaultpanel=calendar
+
+# Panel layout: 0-7
+#   0 = calendar top-right, todo bottom-right, appointments left
+#   1 = calendar top-right, todo bottom-right, appointments right
+#   2 = calendar left, todo bottom-right, appointments top-right
+#   3 = calendar left, appointments top-right, todo bottom-right
+#   4 = calendar right, appointments top-left, todo bottom-left
+#   5 = calendar right, todo top-left, appointments bottom-left
+#   6 = calendar top, appointments bottom-left, todo bottom-right
+#   7 = calendar top, todo bottom-left, appointments bottom-right
+appearance.layout=2
+
+# Show header line in panels: yes or no
+appearance.headerline=yes
+
+# Separator between events on the same day: yes or no
+appearance.eventseparator=yes
+
+# Separator between days: yes or no
+appearance.dayseparator=yes
+
+# Empty line between appointments on different days: yes or no
+appearance.emptyline=yes
+
+# Placeholder text for empty days (e.g. --)
+appearance.emptyday=--
+
+# Show notification bar at the bottom: yes or no
+appearance.notifybar=yes
+
+# Sidebar width in percent (0 = automatic)
+appearance.sidebarwidth=0
+
+# Color theme: "foreground on background"
+# Available colors: black, red, green, yellow, blue, magenta, cyan, white, default
+# Use "none" for black and white
+appearance.theme=blue on default
+
+# Todo view: show-completed or hide-completed
+appearance.todoview=hide-completed
+
+# Day heading position: left-justified, centered or right-justified
+appearance.headingpos=right-justified
+
+# ─── Daemon (background notifications) ─────────────────────────────────────────
+
+# Enable notification daemon: yes or no
+daemon.enable=yes
+
+# Log daemon activity to a file: yes or no
+daemon.log=no
+
+# ─── Date and time format ──────────────────────────────────────────────────────
+
+# Input date format:
+#   1 = mm/dd/yyyy
+#   2 = dd/mm/yyyy
+#   3 = yyyy/mm/dd
+#   4 = yyyy-mm-dd
+format.inputdate=4
+
+# Notification bar date format (strftime)
+format.notifydate=%a %F
+
+# Notification bar time format (strftime)
+format.notifytime=%T
+
+# Appointment/event time format (strftime)
+format.appointmenttime=%H:%M
+
+# Output date format in non-interactive/CLI mode (strftime)
+format.outputdate=%F
+
+# Day heading format (strftime)
+format.dayheading=%B %e, %Y
+
+# ─── General options ───────────────────────────────────────────────────────────
+
+# Automatic garbage collector (orphaned notes): yes or no
+general.autogc=no
+
+# Auto-save on exit: yes or no
+general.autosave=yes
+
+# Confirm before deleting: yes or no
+general.confirmdelete=yes
+
+# Confirm before quitting: yes or no
+general.confirmquit=yes
+
+# First day of the week: monday, sunday, tuesday, wednesday, thursday, friday, saturday
+general.firstdayofweek=monday
+
+# Show multi-day appointments on all days in the range: yes or no
+general.multipledays=yes
+
+# Periodic auto-save interval (minutes, 0 = disabled)
+general.periodicsave=0
+
+# Include system events (birthdays, etc.): yes or no
+general.systemevents=yes
+
+# ─── Notifications ─────────────────────────────────────────────────────────────
+
+# Notification command (e.g. notify-send, echo, beep)
+notification.command=printf '\a'
+
+# Which items to notify:
+#   flagged-only   = only flagged items
+#   unflagged-only = only unflagged items
+#   all            = all items
+notification.notifyall=flagged-only
+
+# Advance warning time in seconds (default 300 = 5 min)
+notification.warning=300

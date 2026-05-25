@@ -1,0 +1,124 @@
+configuration{
+    modi: "run,drun,window";
+    lines: 6;
+    font: "JetBrainsMono Nerd Font 12";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    terminal: "kitty";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-window: "   Window";
+    sidebar-mode: true;
+}
+
+@theme "catppuccin"
+
+element-text, element-icon , mode-switcher {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+window {
+    height: 320px;
+    width: 480px;
+    border: 2px;
+    border-color: @border-col;
+    background-color: @bg-col;
+    border-radius: 10px;
+    padding: 4px;
+}
+
+mainbox {
+    background-color: @bg-col;
+    border-radius: 8px;
+}
+
+inputbar {
+    children: [prompt,entry];
+    background-color: @bg-col;
+    border-radius: 6px;
+    padding: 2px;
+    spacing: 4px;
+}
+
+prompt {
+    background-color: @blue;
+    padding: 4px 8px;
+    text-color: @bg-col;
+    border-radius: 6px;
+    margin: 8px 0px 0px 12px;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+}
+
+entry {
+    padding: 4px 8px;
+    margin: 8px 12px 0px 4px;
+    text-color: @fg-col;
+    background-color: @bg-col;
+    border-radius: 6px;
+    border: 1px;
+    border-color: @border-col;
+}
+
+listview {
+    border: 0px;
+    padding: 4px 0px 0px;
+    margin: 4px 12px 4px 12px;
+    columns: 1;
+    background-color: @bg-col;
+    spacing: 2px;
+}
+
+element {
+    padding: 4px 8px;
+    background-color: @bg-col;
+    text-color: @fg-col;
+    border-radius: 6px;
+}
+
+element-icon {
+    size: 20px;
+    padding: 0px 4px 0px 0px;
+}
+
+element selected {
+    background-color: @selected-col;
+    text-color: @fg-col;
+    border-radius: 6px;
+    border: 1px;
+    border-color: @blue;
+}
+
+element alternate {
+    background-color: @bg-col;
+}
+
+mode-switcher {
+    spacing: 2px;
+    background-color: @bg-col;
+    padding: 0px 12px 8px 12px;
+}
+
+button {
+    padding: 4px 10px;
+    background-color: @bg-col-light;
+    text-color: @grey;
+    border-radius: 6px;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+}
+
+button selected {
+    background-color: @bg-col;
+    text-color: @blue;
+    border: 1px;
+    border-color: @blue;
+}

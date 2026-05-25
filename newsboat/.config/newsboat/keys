@@ -1,0 +1,83 @@
+# vim:ft=conf
+# Key Bindings - from backup, adapted for current setup
+
+# --- Reset Default Bindings ---
+unbind-key j
+unbind-key J
+unbind-key k
+unbind-key K
+unbind-key l
+unbind-key h
+unbind-key P
+unbind-key D
+unbind-key a
+unbind-key c
+unbind-key C
+unbind-key R
+
+# --- Global Controls ---
+bind-key h          quit
+bind-key q          quit
+bind-key Q          hard-quit
+
+# --- Vertical Navigation ---
+bind-key j          down article
+bind-key k          up article
+bind-key d          pagedown
+bind-key u          pageup
+bind-key g          home all
+bind-key G          end all
+
+# --- Horizontal / Context Navigation ---
+bind-key j          next articlelist
+bind-key j          next feedlist
+bind-key j          next tagselection
+bind-key j          next filterselection
+
+bind-key J          next-feed articlelist
+bind-key J          next-feed feedlist
+
+bind-key k          prev articlelist
+bind-key k          prev feedlist
+bind-key k          prev tagselection
+bind-key k          prev filterselection
+
+bind-key K          prev-feed articlelist
+bind-key K          prev-feed feedlist
+
+# --- Unread Navigation ---
+bind-key n          next-unread
+bind-key N          prev-unread
+
+# --- Article Actions ---
+bind-key SPACE      toggle-article-read
+bind-key o          open-in-browser
+bind-key O          open-in-browser-and-mark-read
+bind-key U          show-urls
+bind-key S          save
+
+bind-key l          open-in-browser article
+bind-key l          open articlelist
+bind-key l          open feedlist
+bind-key l          open tagselection
+bind-key l          open filterselection
+
+# --- Feed Management ---
+bind-key m          toggle-show-read-feeds
+bind-key b          toggle-article-read
+bind-key a          mark-all-above-as-read
+bind-key A          mark-feed-read
+bind-key C          mark-all-feeds-read
+
+# --- Reload ---
+bind-key ^R         reload-all
+
+# --- Search ---
+bind-key /          open-search tagselection
+bind-key s          open-search
+
+# --- Podboat ---
+bind-key a           pb-download
+bind-key R           pb-delete
+bind-key P           pb-purge
+bind-key c           pb-cancel

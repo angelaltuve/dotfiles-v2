@@ -1,0 +1,91 @@
+# vim:ft=conf
+# Newsboat Main Configuration
+
+#-----------------------#
+# general settings      #
+#-----------------------#
+refresh-on-startup     yes
+auto-reload            yes
+reload-time            30
+reload-threads         5
+user-agent             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+suppress-first-reload  yes
+reload-only-visible-feeds yes
+scrolloff              8
+ignore-mode            display
+save-path              "~/Downloads/newsboat/"
+confirm-exit           yes
+cleanup-on-quit        yes
+confirm-delete-all-articles no
+confirm-mark-feed-read no
+confirm-mark-all-feeds-read no
+download-retries       5
+download-timeout       30
+
+#-----------------------#
+# display settings      #
+#-----------------------#
+show-keymap-hint       no
+show-read-articles     yes
+show-read-feeds        yes
+swap-title-and-hints   yes
+notify-xterm           yes
+notify-always          yes
+notify-program         "notify-send"
+notify-format          "Newsboat: %f unread feeds (%n unread articles)"
+display-article-progress yes
+article-sort-order     date-desc
+feed-sort-order        unreadarticlecount-desc
+text-width             100
+wrap-scroll            yes
+max-items              500
+keep-articles-days     90
+pager                  "internal"
+
+#-----------------------#
+# article handling      #
+#-----------------------#
+mark-as-read-on-hover  no
+goto-first-unread      no
+goto-next-feed         yes
+toggleitemread-jumps-to-next-unread yes
+openbrowser-and-mark-jumps-to-next-unread yes
+
+#-----------------------#
+# bookmarking           #
+#-----------------------#
+bookmark-cmd           "~/bin/bookmark.sh"
+bookmark-autopilot     yes
+bookmark-interactive   no
+
+#-----------------------#
+# external tools        #
+#-----------------------#
+browser                linkhandler
+external-url-viewer    "xdg-open %u"
+html-renderer          "internal"
+history-limit          200
+
+#-----------------------#
+# podcasts              #
+#-----------------------#
+player                 "mpv"
+podcast-auto-enqueue   yes
+download-path          "~/Downloads/podcasts/"
+download-full-page     no
+podlist-format         "%4i [%6dMB/%6tMB] [%5p %%] [%12K] %-20S %b"
+
+#-----------------------#
+# files                 #
+#-----------------------#
+error-log              ~/.local/share/newsboat/error.log
+cache-file             ~/.local/share/newsboat/cache.db
+datetime-format        "%b %d, %Y"
+
+#-----------------------#
+# includes              #
+#-----------------------#
+include ~/.config/newsboat/theme
+include ~/.config/newsboat/keys
+include ~/.config/newsboat/macros
+include ~/.config/newsboat/filters

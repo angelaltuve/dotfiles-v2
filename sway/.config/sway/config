@@ -1,0 +1,367 @@
+
+### Variables
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+
+## apps
+set $term kitty
+set $menu rofi -show drun
+set $web librewolf
+set $web2 chromium
+set $file_browser kitty -e yazi
+set $rmpc kitty -e rmpc
+
+# Colors
+set $accent #afa193
+set $bg #101010
+set $bg-alt #252525
+set $fg #f6f1ea
+
+# GTK theme settings
+set $font "Ubuntu Regular 10"
+set $monospace_font "JetBrainsMono Nerd Font 10"
+set $icon_theme "Papirus-Dark"
+set $gtk_theme "catppuccin-mocha-blue-standard+default"
+set $cursor_theme "Adwaita"
+set $cursor_size 32
+
+# GTK SETTINGS
+exec_always {
+    gsettings set org.gnome.desktop.interface gtk-theme $gtk_theme
+    gsettings set org.gnome.desktop.interface icon-theme $icon_theme
+    gsettings set org.gnome.desktop.interface font-name $font
+    gsettings set org.gnome.desktop.interface monospace-font-name $monospace_font
+    gsettings set org.gnome.desktop.interface document-font-name "$font"
+    gsettings set org.gnome.desktop.wm.preferences button-layout ':'
+    gsettings set org.gnome.desktop.interface cursor-theme $cursor_theme
+    gsettings set org.gnome.desktop.interface cursor-size $cursor_size
+    gsettings set org.gnome.desktop.interface font-antialiasing grayscale
+    gsettings set org.gnome.desktop.interface font-hinting medium
+    gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+}
+
+seat seat0 xcursor_theme $cursor_theme $cursor_size
+
+# Font
+font pango: JetBrainsMono Nerd Font 16
+
+### Input configuration
+input type:touchpad {
+  natural_scroll enabled
+  pointer_accel 0
+  tap enabled
+  click_method clickfinger
+  dwt enabled
+  middle_emulation disabled
+  scroll_method two_finger
+  scroll_factor 0.4
+  tap_button_map lrm
+  drag disabled
+}
+
+input type:keyboard {
+    xkb_layout "us,es"
+    xkb_options "grp:alt_shift_toggle,compose:caps"
+    repeat_delay 250
+    repeat_rate 40
+}
+
+### Output configuration
+output LVDS-1 bg ~/Pictures/wallpapers/wallhaven-yqg6r7.jpg fill
+output LVDS-1 resolution 1366x768@60Hz position 0,0 scale 1.0
+output LVDS-1 scale_filter linear
+output LVDS-1 max_render_time 1
+
+### Window decorations
+gaps inner 5
+gaps outer 0
+default_border pixel 2
+default_floating_border pixel 2
+smart_gaps off
+hide_edge_borders none
+titlebar_border_thickness 2
+titlebar_padding 6 4
+focus_follows_mouse no
+focus_on_window_activation smart
+
+### Window Rules
+for_window [app_id = "keepassxc"] floating enable, border pixel 1, resize set width 90 ppt height 90 ppt, move position center
+for_window [app_id = "org.telegram.desktop"] floating enable, resize set width 70 ppt height 80 ppt, move position center
+for_window [app_id = "localsend"] floating enable, move position center
+for_window [app_id = "lxappearance"] floating enable, resize set width 50 ppt height 60 ppt, move position center
+for_window [app_id = "pavucontrol"] floating enable, resize set width 40 ppt height 50 ppt, move position center
+for_window [app_id = "pcmanfm"] floating enable, resize set width 80 ppt height 80 ppt, move position center
+for_window [app_id = "polkit-gnome-authentication-agent-1"] floating enable, resize set width 45 ppt height 25 ppt, move position center
+
+# Browser and file dialog specific rules
+for_window [title = "LibreWolf - Sharing Indicator"] floating enable
+for_window [title = "^Extension: .*" app_id = "librewolf"] floating enable
+for_window [title = "^Open File$"] floating enable
+for_window [title = "^Save As$"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_role="dialog"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+for_window [window_role="About"] floating enable
+for_window [title="File Operation Progress"] floating enable, border pixel 1, sticky enable, resize set width 40 ppt height 30 ppt
+for_window [title="Save File"] floating enable
+for_window [title="Floating Window - Show Me The Key"] floating enable, sticky enable
+for_window [title="Picture in picture"] floating enable, sticky enable, resize set width 350 px height 197 px, move position 1530 px 800 px
+
+# Inhibit idle
+for_window [title="shortcuts"] floating enable, border pixel 1, resize set width 60 ppt height 70 ppt, move position center
+for_window [app_id="Chromium"] inhibit_idle fullscreen
+for_window [class="LibreWolf"] inhibit_idle fullscreen
+for_window [app_id="org.telegram.desktop"] inhibit_idle fullscreen
+for_window [app_id="mpv"] inhibit_idle fullscreen
+for_window [app_id="FBReader"] inhibit_idle fullscreen
+
+# XWayland indicator
+for_window [shell="xwayland"] title_format "<span>[X11] %title゜</span>"
+
+# Focus rules
+no_focus [app_id="waybar"]
+focus_on_window_activation focus
+
+# launch apps
+exec swaymsg "workspace 2; exec librewolf"
+exec swaymsg "workspace 1; exec kitty"
+
+### Idle configuration
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 420 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+         timeout 600 'swaymsg "output * power on"; sleep 1; loginctl suspend' \
+         before-sleep 'swaylock -f -c 000000'
+
+
+### Startup applications
+exec dbus-update-activation-environment --all
+exec_always {
+    pidof ssh-agent || ssh-agent -a /tmp/ssh-agent.sock
+    pidof /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+    pidof wl-paste || wl-paste --watch cliphist store
+    pidof wlsunset || wlsunset -S '06:30' -s '19:30' -d 1800
+    pidof mako || mako
+    # pidof gnome-keyring-daemon || gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
+    pidof keepassxc || keepassxc --minimized 2>/dev/null
+    pidof swayosd-server || swayosd-server
+}
+
+# Window colors
+# Colors                border   bg       text     indi     childborder
+client.focused          #b4befe #b4befe #cdd6f4 #9399b2 #b4befe
+client.focused_inactive #1e1e2e #1e1e2e #cdd6f4 #1e1e2e #1e1e2e
+client.unfocused        #1e1e2e #1e1e2e #cdd6f4 #1e1e2e #1e1e2e
+client.urgent           #f38ba8 #f38ba8 #cdd6f4 #f38ba8 #f38ba8
+
+### Key bindings
+# Basics
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec alacritty
+bindsym $mod+q kill
+bindsym $mod+d exec $menu
+bindsym $mod+Shift+b exec $web
+bindsym $mod+Alt+b exec $web2
+bindsym $mod+Alt+f exec $file_browser
+bindsym $mod+Shift+c reload
+
+# Exit sway
+# Calculator
+bindsym $mod+Shift+q exec kitty --class=qalc -e qalc
+
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+
+# Lock Sway
+bindsym $mod+Ctrl+q           exec swaylock
+
+# Recall last notifications
+bindsym $mod+asciitilde       exec makoctl restore
+
+# Pick color and copy to clipboard
+bindsym $mod+Shift+P          exec --no-startup-id hyprpicker -n -a
+
+
+# Show clipboard (for copying)
+bindsym $mod+Alt+Space          exec cliphist list \
+                              | rofi -dmenu \
+                              | cliphist decode \
+                              | wl-copy
+
+# Show clipboard (for deleting)
+bindsym $mod+Alt+Backslash    exec cliphist list \
+                              | rofi -dmenu \
+                              | cliphist delete
+
+
+floating_modifier $mod normal
+
+# Move focus up
+bindsym $mod+$up    focus up
+bindsym $mod+Up     focus up
+# Move focus right
+bindsym $mod+$right focus right
+bindsym $mod+Right  focus right
+# Move focus down
+bindsym $mod+$down  focus down
+bindsym $mod+Down   focus down
+# Move focus left
+bindsym $mod+$left  focus left
+bindsym $mod+Left   focus left
+
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Focus parent
+bindsym $mod+Control+p focus parent
+
+# Focus LibreWolf
+bindsym $mod+Control+w [app_id="librewolf"] focus
+
+# Focus Chromium
+bindsym $mod+Control+Shift+w [app_id="chromium-browser-chromium"] focus
+
+# Focus terminal 
+bindsym $mod+Control+g [app_id="kitty"] focus
+
+# Focus on parent container (enhanced traversal)
+bindsym $mod+Control+$up    focus parent, focus up,    focus child
+bindsym $mod+Control+$right focus parent, focus right, focus child
+bindsym $mod+Control+$down  focus parent, focus down,  focus child
+bindsym $mod+Control+$left  focus parent, focus left,  focus child
+
+# Workspaces
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# Switch to previous/next workspace
+bindsym $mod+bracketleft workspace prev
+bindsym $mod+bracketright workspace next
+
+# Layout & Scratchpad
+bindsym $mod+b splith
+bindsym $mod+v splitv
+# bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+s layout toggle split
+bindsym $mod+Tab focus mode_toggle
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# Resizing mode
+mode "resize" {
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Utilities & Media
+bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume raise
+bindsym XF86AudioLowerVolume exec  swayosd-client --output-volume lower
+bindsym XF86AudioMute exec swayosd-client --output-volume mute-toggle
+bindsym XF86AudioMicMute exec swayosd-client --input-volume mute-toggle
+bindsym XF86MonBrightnessUp exec swayosd-client --brightness raise
+bindsym XF86MonBrightnessDown exec swayosd-client --brightness lower
+
+
+# Screenshot whole screen
+bindsym Print                 exec --no-startup-id screenshot
+
+# Screenshot region of screen
+bindsym Shift+Print           exec --no-startup-id screenshot region
+
+# Screenshot current window
+bindsym Ctrl+Print            exec --no-startup-id screenshot active
+
+# Parse text on screen and copy to clipboard
+bindsym $mod+Print            exec --no-startup-id text-extraction
+
+bindsym $mod+Shift+Print      exec --no-startup-id qr-extraction
+
+bindsym $mod+Alt+Print        exec --no-startup-id screenrecording
+
+bindsym $mod+m                exec $rmpc
+
+bindsym $mod+Alt+g exec chromium --app="https://web.whatsapp.com/"
+bindsym $mod+Alt+x exec chromium --app="https://discordapp.com/"
+bindsym $mod+Control+x exec chromium --app="https://xcancel.com/puravirtud"
+bindsym $mod+Control+o exec chromium --app="https://classroom.google.com/"
+
+
+# Toggle playback
+bindsym $mod+p               exec mpc toggle
+bindsym $mod+F8               exec mpc toggle
+bindsym XF86AudioPlay         exec playerctl play-pause
+
+# Next song
+bindsym $mod+F9               exec mpc next 
+bindsym XF86AudioNext         exec playerctl next
+
+# Previous song
+bindsym $mod+F7               exec mpc prev
+bindsym XF86AudioPrev         exec playerctl previous
+
+# bindsym $mod+Control+bracketleft mpc seek -10
+# bindsym $mod+Control+bracketright mpc seek +10
+
+# Atajos
+bindsym $mod+F1 exec kitty --title shortcuts -e shortcuts
+
+### Status Bar
+bar {
+    position top
+    swaybar_command waybar
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+
+include /etc/sway/config.d/*

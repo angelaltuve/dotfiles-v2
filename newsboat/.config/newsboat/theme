@@ -1,0 +1,47 @@
+# vim:ft=conf
+# Catppuccin Mocha Theme for Newsboat
+# Palette: https://catppuccin.com/palette
+
+color background             default     default
+color listnormal             color250    default
+color listnormal_unread      color114    default bold
+color listfocus              color252    color237 reverse
+color listfocus_unread       color114    color237 reverse bold
+color info                   color75     default
+color title                  color183    default bold
+color hint-description       color244    default underline
+color article                color252    default
+color end-of-text-marker     color242    default
+
+datetime-format              "%b %d %R"
+
+feedlist-title-format        "    Feeds%?T? :: %T?%>  %u unread / %t total"
+feedlist-format              "%2i  %t%>  %U/%c"
+
+articlelist-title-format     "%T :: %u unread%>  articles"
+articlelist-format           "%3i %D %t%?T? [%T]?%>  %f"
+
+itemview-title-format        "%T%>  %u/%t unread"
+
+searchresult-title-format    "    %s%?F? :: %F?%>  %u/%t unread"
+selecttag-title-format       "    Select Tag%>  newsboat"
+selectfilter-title-format    "    Select Filter%>  newsboat"
+help-title-format            "    Help%>  newsboat"
+urlview-title-format         "    URLs%>  newsboat"
+dialogs-title-format         "    Dialogs%>  newsboat"
+dirbrowser-title-format      "%?O?  Open dir & save file? - %f%> newsboat"
+filebrowser-title-format     "%?O?  Open file & save file? - %f%> newsboat"
+
+highlight article "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]*[-A-Za-z0-9+&@#/%=~_|]" color75 default underline
+highlight article "^Links:" color244 default underline
+highlight article "^(Title|Author|Date|Link):.*" color183 default bold
+highlight article "^Feed:.*" color216 default bold
+highlight article "\\b(important|breaking|alert|update)\\b" color210 default bold
+highlight article "\\b(news|headline|report|source)\\b" color114 default
+highlight article "^Podcast Download URL:.*" color114 default
+highlight article "\\[[0-9][0-9]*\\]" color147 default bold
+highlight article "\\[image [0-9][0-9]*\\]" color147 default bold
+highlight article "\\[embedded flash: [0-9][0-9]*\\]" color147 default bold
+highlight article ":.*\\(link\\)$" color75 default
+highlight article ":.*\\(image\\)$" color79 default
+highlight article ":.*\\(embedded flash\\)$" color79 default

@@ -1,0 +1,142 @@
+@import "waybar.css";
+
+* {
+  background-color: @base;
+  color: @text;
+
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: 'JetBrainsMono Nerd Font';
+  font-size: 12px;
+}
+
+.modules-left {
+  margin-left: 8px;
+}
+
+.modules-right {
+  margin-right: 8px;
+}
+
+#workspaces button {
+  all: initial;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
+  color: @overlay0;
+}
+
+#workspaces button.active {
+  color: @mauve;
+}
+
+#workspaces button.focused {
+  color: @blue;
+}
+
+#workspaces button.empty {
+  opacity: 0.5;
+}
+
+#cpu,
+#battery,
+#pulseaudio,
+#custom-menu {
+  min-width: 12px;
+  margin: 0 7.5px;
+}
+
+#tray {
+  margin: 0 8px;
+}
+
+#bluetooth {
+  margin: 0 8px;
+}
+
+#network {
+  margin: 0 8px;
+}
+
+#custom-expand-icon {
+  margin: 0 8px;
+}
+
+tooltip {
+  padding: 2px;
+}
+
+#custom-updates {
+  margin: 0 7px;
+  font-size: 10px;
+}
+
+#clock {
+  margin: 0 7px;
+}
+
+#custom-weather {
+  margin: 0 7px;
+}
+
+#custom-weather.unavailable {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.hidden {
+  opacity: 0;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+}
+
+#custom-wireguard {
+  min-width: 12px;
+  margin: 0 7px;
+  font-size: 10px;
+  padding-bottom: 1px;
+}
+
+#custom-wireguard.active {
+  color: @green;
+}
+
+#custom-wireguard.inactive {
+  color: @red;
+}
+
+#custom-screenrecording-indicator,
+#custom-idle-indicator,
+#custom-notification-silencing-indicator {
+  min-width: 20px;
+  margin: 0 7px;
+}
+
+#custom-screenrecording-indicator.active {
+  color: @red;
+}
+
+#custom-idle-indicator.active,
+#custom-notification-silencing-indicator.active {
+  color: @red;
+}
+
+#mpd {
+  margin: 0 5px;
+  font-size: 11px;
+}
+
+#mpd.playing {
+  color: @green;
+}
+
+#mpd.paused {
+  color: @overlay0;
+}
+
+#language {
+  margin: 0 8px;
+}
