@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+if pgrep -x swayidle >/dev/null; then
+  pkill -x swayidle
+  notify-send -u low "󱫖    Stop locking computer when idle"
+else
+  setsid swayidle >/dev/null 2>&1 &
+  notify-send -u low "󱫖    Now locking computer when idle"
+fi
+
+pkill -RTMIN+9 waybar

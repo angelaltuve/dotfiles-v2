@@ -1,0 +1,30 @@
+#!/bin/bash
+
+configs=$(ls /etc/wireguard/*.conf 2>/dev/null | xargs -n1 basename -s .conf)
+[[ -z $configs ]] && { notify-send -u low "No WireGuard configs in /etc/wireguard/"; exit 1; }
+
+active=$(wg show 2>/dev/null | grep ^interface | awk '{print $2}')
+
+list=""
+while IFS= read -r c; do
+  if echo "$active" | grep -qxF "$c"; then
+    list+="  $c\n"
+  else
+    list+="  $c\n"
+  fi
+done <<< "$configs"
+
+choice=$(echo -e "$list" | rofi -dmenu -p "WireGuard" -i) || exit 0
+
+name="${choice#*  }"
+
+case $choice in
+  *)
+    sudo wg-quick down "$name" && notify-send -u low "WireGuard: $name disconnected"
+    ;;
+  *)
+    sudo wg-quick up "$name" && notify-send -u low "WireGuard: $name connected"
+    ;;
+esac
+
+pkill -RTMIN+11 waybar 2>/dev/null || true

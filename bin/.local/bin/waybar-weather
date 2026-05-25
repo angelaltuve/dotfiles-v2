@@ -1,0 +1,19 @@
+#!/bin/bash
+
+weather=$(curl -fsS --max-time 4 "https://wttr.in?format=%t|%w|%C" 2>/dev/null)
+if [[ -z $weather ]]; then
+  echo '{"text": "", "alt": "unavailable", "tooltip": "Weather unavailable", "class": "unavailable"}'
+  exit 0
+fi
+
+IFS='|' read -r temperature wind condition <<< "$weather"
+temperature=${temperature#+}
+icon=$(weather-icon 2>/dev/null || echo "")
+status=$(weather-status 2>/dev/null || echo "Weather")
+
+jq -cn --arg icon "$icon" --arg temp "$temperature" --arg wind "$wind" --arg cond "$condition" --arg status "$status" '{
+  text: ($icon + " " + $temp),
+  alt: $cond,
+  tooltip: $status,
+  class: "weather"
+}'

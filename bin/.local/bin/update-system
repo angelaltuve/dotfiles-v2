@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DESC="update-$(date +%Y%m%d-%H%M)"
+
+if ! launch-tui yay -Syu; then
+    exit 1
+fi
+
+snapper -c root create -c number -d "$DESC"
+snapper -c root cleanup number

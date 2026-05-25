@@ -1,0 +1,4 @@
+#!/bin/bash
+
+
+exec setsid xdg-terminal-exec --app-id=terminal -e "$@"

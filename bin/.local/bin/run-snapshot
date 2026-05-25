@@ -1,0 +1,18 @@
+#!/bin/bash
+
+DESC="snapshot-$(date +%Y%m%d-%H%M)"
+
+case "${1:-help}" in
+create)
+    snapper -c root create -c number -d "$DESC"
+    snapper -c root cleanup number
+    ;;
+restore)
+    echo "Usage: snapper -c root undochange <from>..<to>"
+    exit 1
+    ;;
+*)
+    echo "Usage: run-snapshot <create|restore>"
+    exit 1
+    ;;
+esac

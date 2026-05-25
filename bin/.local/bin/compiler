@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+file="${1}"
+ext="${file##*.}"
+dir=${file%/*}
+base="${file##*/}"
+base="${base%.*}"
+
+cd "${dir}" || exit 1
+
+case "${ext}" in
+[0-9]) preconv "${file}" | refer -PS -e | groff -mandoc -T pdf >"${base}.pdf" ;;
+mom | ms) preconv "${file}" | refer -PS -e | groff -T pdf -m"${ext}" >"${base}.pdf" ;;
+c) cc "${file}" -o "${base}" && "./${base}" ;;
+cob) cobc -x -o "$base" "$file" && "$base" ;;
+cpp) g++ "${file}" -o "${base}" && "./${base}" ;;
+cs) mcs "${file}" && mono "${base}.exe" ;;
+go) go run "${file}" ;;
+h) sudo make install ;;
+java) javac -d classes "${file}" && java -cp classes "${base}" ;;
+js) node "${file}" ;;
+ts) npx tsc "${file}" && node "${base}.js" ;;
+lua) lua "${file}" ;;
+dart) dart run "${file}" ;;
+m) octave "${file}" ;;
+md)
+  pandoc \
+    --resource-path="$(dirname "$file")" \
+    --resource-path="$(dirname "$(dirname "$file")")" \
+    --lua-filter="$HOME/.config/pandoc/lua/pdf.lua" \
+    -o "${base}.pdf" \
+    -t pdf \
+    --pdf-engine=xelatex \
+    --highlight-style=kate \
+    "$file"
+  ;;
+org) emacs "${file}" --batch -u "${USER}" -f org-latex-export-to-pdf ;;
+py) python3 "${file}" ;;
+rink) rink -f "${file}" ;;
+[rR]md) Rscript -e "rmarkdown::render('${file}', quiet=TRUE)" ;;
+rs) cargo run ;;
+sass) sassc -a "${file}" "${base}.css" ;;
+scad) openscad -o "${base}.stl" "${file}" ;;
+sh | bash) bash "${file}" ;;
+sent) setsid -f sent "${file}" 2>"/dev/null" ;;
+tex) latexmk "${file}" ;;
+gv | dot) dot -Tpng "${file}" -o "${base}.png" ;;
+puml) plantuml "${file}" ;;
+*)
+  shebang=$(sed -n '/^#!/s/^#!//p; q' "${file}")
+  if [[ -n "$shebang" ]]; then
+    $shebang "${file}"
+  else
+    echo "compiler: no handler for .${ext}" >&2
+    exit 1
+  fi
+  ;;
+esac

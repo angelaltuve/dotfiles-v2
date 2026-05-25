@@ -1,0 +1,77 @@
+#!/bin/bash
+
+
+menu() {
+  local prompt="$1"
+  local options="$2"
+  echo -e "$options" | rofi -dmenu -p "$prompt" -i -theme-str 'window {width: 300;} listview {lines: 10;}'
+}
+
+if [[ -n $1 ]]; then
+  case "$1" in
+    power) show_system_menu; exit 0 ;;
+  esac
+fi
+
+show_main_menu() {
+  case $(menu "Menu" "󰀻  Apps\n󰋼  Capture\n  VPN\n  System") in
+    *Apps*) rofi -show drun -show-icons ;;
+    *Capture*) show_capture_menu ;;
+    *VPN*) wireguard ;;
+    *System*) show_system_menu ;;
+    *) exit 0 ;;
+  esac
+}
+
+show_capture_menu() {
+  case $(menu "Capture" "  Screenshot\n  Recording\n󰴑  Text\n  QR") in
+    *Screenshot*) show_screenshot_menu ;;
+    *Recording*) show_recording_menu ;;
+    *Text*) text-extraction ;;
+    *QR*) qr-extraction ;;
+    *) show_main_menu ;;
+  esac
+}
+
+show_screenshot_menu() {
+  case $(menu "Screenshot" "󰆞  Fullscreen\n  Region\n  Active window") in
+    *Fullscreen*) screenshot full ;;
+    *Region*) screenshot region ;;
+    *Active*window*) screenshot active ;;
+    *) show_capture_menu ;;
+  esac
+}
+
+show_recording_menu() {
+  area=$(menu "Recording" "󰆞  Fullscreen\n  Region\n  Active window") || show_main_menu
+  case $area in
+    *Fullscreen*) area=fullscreen ;;
+    *Region*) area=region ;;
+    *Active*window*) area=focused ;;
+    *) show_main_menu; return ;;
+  esac
+
+  audio=$(menu "Recording $area" "  + Monitor audio\n  + Mic\n  + Both\n  Video only") || show_main_menu
+  case $audio in
+    *Monitor*audio*) audio=monitor ;;
+    *Mic*) audio=mic ;;
+    *Both*) audio=both ;;
+    *Video*only*) audio=none ;;
+    *) show_main_menu; return ;;
+  esac
+
+  screenrecording "$area" "$audio"
+}
+
+show_system_menu() {
+  case $(menu "System" "󰌑  Lock\n󰒲  Suspend\n󰍃  Logout\n󰜉  Reboot\n󰐥  Shutdown") in
+    *Lock*) system-lock ;;
+    *Suspend*) loginctl suspend ;;
+    *Logout*) system-logout ;;
+    *Reboot*) system-reboot ;;
+    *Shutdown*) system-shutdown ;;
+    *) show_main_menu ;;
+  esac
+}
+
+show_main_menu

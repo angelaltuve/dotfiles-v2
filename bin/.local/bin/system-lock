@@ -1,0 +1,29 @@
+#!/bin/bash
+
+
+if ! pidof swaylock >/dev/null; then
+  (
+    swaylock
+    system-wake
+  ) &
+fi
+
+# Set keyboard layout to default (first layout)
+swaymsg input "*" xkb_switch_layout 0 2>/dev/null || true
+
+# Ensure 1password is locked
+if pgrep -x "1password" >/dev/null; then
+  1password --lock &
+fi
+
+# Avoid running screensaver when locked
+pkill -f screensaver
+
+if true; then
+  (
+    sleep 3
+    pidof swaylock >/dev/null || exit 0
+    brightness-keyboard off
+    brightness-display off
+  ) &
+fi

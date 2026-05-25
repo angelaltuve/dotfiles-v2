@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Simple xdg-terminal-exec implementation for dinit systems
+# Reads ~/.config/xdg-terminals.list or uses kitty as default
+
+config_file="${XDG_CONFIG_HOME:-$HOME/.config}/xdg-terminals.list"
+terminal=""
+
+if [[ -f "$config_file" ]]; then
+  while IFS= read -r line; do
+    [[ -z "$line" || "$line" == \#* ]] && continue
+    desktop="$line"
+    case "$desktop" in
+      Alacritty.desktop)  term="alacritty" ;;
+      foot.desktop)       term="foot" ;;
+      kitty.desktop)      term="kitty" ;;
+      com.mitchellh.ghostty.desktop) term="ghostty" ;;
+      *)                  continue ;;
+    esac
+    if command -v "$term" &>/dev/null; then
+      terminal="$term"
+      break
+    fi
+  done < "$config_file"
+fi
+
+if [[ -z "$terminal" ]]; then
+  for t in kitty alacritty foot ghostty; do
+    if command -v "$t" &>/dev/null; then
+      terminal="$t"
+      break
+    fi
+  done
+fi
+
+if [[ -z "$terminal" ]]; then
+  echo "xdg-terminal-exec: no terminal emulator found" >&2
+  exit 1
+fi
+
+exec "$terminal" "$@"

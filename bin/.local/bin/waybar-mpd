@@ -1,0 +1,16 @@
+#!/bin/bash
+
+status=$(mpc status 2>/dev/null) || { echo '{"text": "", "class": "hidden"}'; exit 0; }
+
+state=$(mpc status "%state%" 2>/dev/null)
+song=$(mpc current 2>/dev/null)
+[[ ${#song} -gt 40 ]] && song="${song:0:37}..."
+song=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g' <<< "$song")
+
+if [[ $state == "playing" ]]; then
+  echo "{\"text\": \" $song\", \"alt\": \"playing\", \"class\": \"playing\", \"tooltip\": \"$song\"}"
+elif [[ $state == "paused" ]]; then
+  echo "{\"text\": \" $song\", \"alt\": \"paused\", \"class\": \"paused\", \"tooltip\": \"$song\"}"
+else
+  echo '{"text": "", "class": "hidden"}'
+fi

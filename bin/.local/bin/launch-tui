@@ -1,0 +1,4 @@
+#!/bin/bash
+
+
+exec xdg-terminal-exec --app-id="$(basename "$1")" -e "$@"

@@ -1,0 +1,33 @@
+#!/bin/sh
+
+cmd="${1:-toggle}"
+
+down_all() {
+  pkexec /usr/bin/wg show interfaces 2>/dev/null | while read -r iface; do
+    [ -n "$iface" ] && pkexec /usr/bin/wg-quick down "$iface"
+  done
+}
+
+case "$cmd" in
+  toggle)
+    if /usr/bin/sudo /usr/bin/wg show 2>/dev/null | grep -q ^interface; then
+      down_all
+    else
+      configs=$(/usr/bin/sudo ls -1 /etc/wireguard/*.conf 2>/dev/null | xargs -n 1 basename | sed 's/\.conf//')
+      [ -z "$configs" ] && exit 1
+      selected=$(printf "%s" "$configs" | rofi -dmenu -p "WireGuard")
+      [ -z "$selected" ] && exit 0
+      down_all
+      sleep 1
+      pkexec /usr/bin/wg-quick up "$selected"
+    fi
+    pkill -SIGRTMIN+11 waybar
+    ;;
+  current)
+    if /usr/bin/sudo /usr/bin/wg show 2>/dev/null | grep -q ^interface; then
+      printf '{"text": "", "class": "active", "alt": "connected"}\n'
+    else
+      printf '{"text": "", "class": "inactive", "alt": "disconnected"}\n'
+    fi
+    ;;
+esac

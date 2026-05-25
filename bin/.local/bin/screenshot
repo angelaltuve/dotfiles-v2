@@ -1,0 +1,29 @@
+#!/bin/bash
+
+
+dest="${XDG_PICTURES_DIR:-$HOME/Pictures}/screenshots"
+mkdir -p "$dest"
+file="$dest/screenshot-$(date +%Y%m%d-%H%M%S).png"
+
+case "${1:-full}" in
+  full)
+    grim "$file"
+    ;;
+  region)
+    grim -g "$(slurp)" "$file"
+    ;;
+  active)
+    geom=$(swaymsg -t get_tree -r | jq -r '
+      .. | select(.focused? == true) |
+      "\(.rect.x),\(.rect.y) \(.rect.width)x\(.rect.height)"
+    ' 2>/dev/null) || exit 1
+    grim -g "$geom" "$file"
+    ;;
+  *)
+    echo "Usage: $0 {full|region|active}"
+    exit 1
+    ;;
+esac
+
+wl-copy < "$file"
+notify-send -u low "Screenshot saved" "$file"

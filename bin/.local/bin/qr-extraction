@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+tmp=$(mktemp /tmp/qr-XXXXXX.png)
+grim -g "$(slurp)" "$tmp" || { rm -f "$tmp"; exit 1; }
+
+result=$(zbarimg -q "$tmp" 2>/dev/null)
+rm -f "$tmp"
+
+if [[ -z $result ]]; then
+  notify-send -u low "No QR code found"
+  exit 1
+fi
+
+data="${result#*:}"
+echo "$data" | wl-copy
+notify-send -u low "QR: $data"

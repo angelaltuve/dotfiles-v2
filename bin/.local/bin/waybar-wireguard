@@ -1,0 +1,9 @@
+#!/bin/bash
+
+active=$(wg show 2>/dev/null | grep -c ^interface)
+
+if [[ $active -gt 0 ]]; then
+  echo "{\"text\": \"\", \"alt\": \"active\", \"class\": \"active\", \"tooltip\": \"WireGuard connected\"}"
+else
+  echo "{\"text\": \"\", \"alt\": \"inactive\", \"class\": \"hidden\"}"
+fi

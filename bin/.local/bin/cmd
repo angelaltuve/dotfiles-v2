@@ -1,0 +1,21 @@
+#!/bin/bash
+
+mode="present"
+case "$1" in
+  --present) mode="present"; shift ;;
+  --missing) mode="missing"; shift ;;
+esac
+
+if [[ $mode == "present" ]]; then
+  for cmd in "$@"; do
+    command -v "$cmd" &>/dev/null || exit 1
+  done
+  exit 0
+else
+  for cmd in "$@"; do
+    if ! command -v "$cmd" &>/dev/null; then
+      exit 0
+    fi
+  done
+  exit 1
+fi
