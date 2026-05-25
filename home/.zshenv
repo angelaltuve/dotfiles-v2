@@ -4,13 +4,9 @@
 path+=(
   "$HOME/.local/share/npm/bin"
   "$HOME/Applications"
-  # "$HOME/.bin" moved to $HOME/.local/bin
   "$HOME/.local/share/cargo/bin"
   "$HOME/.local/bin"
 )
-
-# --- FreeType (v35 interpreter for sharper text on older GPUs) ---
-export FREETYPE_PROPERTIES="truetype:interpreter-version=35"
 
 # --- Default Apps ---
 export EDITOR="nvim"
@@ -74,9 +70,6 @@ export FZF_CTRL_R_OPTS="--style minimal --color 16 --info inline --no-sort"
 
 # --- SSH (KeePassXC) ---
 export SSH_AUTH_SOCK="/tmp/ssh-agent.sock"
-# SSH_ASKPASS desactivado
 
 # --- Qt ---
 export QT_QPA_PLATFORMTHEME="gtk3"
-
-
