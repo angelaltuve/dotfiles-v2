@@ -1,0 +1,8 @@
+--ignore=^README.*
+--ignore=^LICENSE.*
+--ignore=^assets.*
+--ignore=\.png$
+--ignore=\.jpg$
+--ignore=\.jpeg$
+--ignore=\.svg$
+--ignore=\.gif$
