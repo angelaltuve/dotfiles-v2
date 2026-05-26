@@ -419,6 +419,16 @@ vim.api.nvim_create_autocmd("UIEnter", {
 	end,
 })
 
+-- Clean tex build files on VimLeave
+vim.api.nvim_create_autocmd("VimLeave", {
+	group = augroup,
+	pattern = "*.tex",
+	callback = function()
+		vim.cmd("silent !latexmk -c " .. vim.fn.expand("%"))
+	end,
+	desc = "Clean tex build files on exit",
+})
+
 -- ============================================================================
 -- PLUGINS (vim.pack)
 -- ============================================================================
