@@ -125,10 +125,17 @@ keymap = [
 	{ on = [ ",", "r" ], run = "sort random --reverse=no",                       desc = "Sort randomly" },
 
 	# Goto
-	{ on = [ "g", "h" ],       run = "cd ~",             desc = "Go home" },
-	{ on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Go ~/.config" },
-	{ on = [ "g", "d" ],       run = "cd ~/Downloads",   desc = "Go ~/Downloads" },
-	{ on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Jump interactively" },
+	{ on = ["H"], run = "cd ~",  desc = "Cd to ~" },
+  { on = ["g", "m"], run = "cd /mnt",        desc = "Cd to /mnt" },
+	{ on = [ "g", "c" ], run = "cd ~/.config",     desc = "Go ~/.config" },
+  { on = ["g", "l"], run = "cd ~/.local/share", desc = "Cd to ~/.local/share" },
+	{ on = [ "g", "D" ], run = "cd ~/Downloads",   desc = "Go ~/Downloads" },
+  { on = ["g", "d"], run = "cd ~/Documents", desc = "Cd to ~/Documents" },
+  { on = ["g", "x"], run = "cd ~/Docs",      desc = "Cd to ~/Docs" },
+	{ on = ["g", "v"], run = "cd ~/Videos",    desc = "Cd to ~/Videos" },
+	{ on = ["g", "u"], run = "cd ~/Music",     desc = "Cd to ~/Music" },
+  { on = ["g", "p"], run = "cd ~/Pictures",     desc = "Cd to ~/Picture" },	
+  { on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Jump interactively" },
 	{ on = [ "g", "f" ],       run = "follow",           desc = "Follow hovered symlink" },
 
 	# Tabs
@@ -171,27 +178,12 @@ prepend_keymap = [
 	# File operations
 	{ on = ['c', 'm'], run = "plugin chmod", desc = "Chmod" },
 	{ on = "C", run = "plugin ouch zip", desc = "Compress" },
-	{ on = ["c", "p"], run = "plugin convert -- --extension='png'", desc = "Convert PNG" },
-	{ on = ["c", "j"], run = "plugin convert -- --extension='jpg'", desc = "Convert JPG" },
-	{ on = ["c", "w"], run = "plugin convert -- --extension='webp'", desc = "Convert WebP" },
 	{ on = "<C-d>", run = "plugin diff", desc = "Diff" },
-	{ on = ["R", "R"], run = "plugin rotate-image", desc = "Rotate image" },
 
 	# Clipboard
 	{ on = "<C-y>", run = ["plugin wl-clipboard"], desc = "Copy clipboard" },
 
-	# Quick dirs (g series)
-	{ on = ["g", "d"], run = "cd ~/Documents", desc = "Cd to ~/Documents" },
-	{ on = ["g", "v"], run = "cd ~/Videos",    desc = "Cd to ~/Videos" },
-	{ on = ["g", "w"], run = "cd ~/Downloads", desc = "Cd to ~/Downloads" },
-	{ on = ["g", "x"], run = "cd ~/Docs",      desc = "Cd to ~/Docs" },
-	{ on = ["g", "u"], run = "cd ~/Music",     desc = "Cd to ~/Music" },
-	{ on = ["g", "c"], run = "cd ~/.config",      desc = "Cd to ~/.config" },
-	{ on = ["g", "l"], run = "cd ~/.local/share", desc = "Cd to ~/.local/share" },
-	{ on = ["H"], run = "cd ~",           desc = "Cd to ~" },
-	{ on = ["g", "m"], run = "cd /mnt",        desc = "Cd to /mnt" },
-
-	# Bookmarks (manual)
+	# Bookmarks 
 	{ on = ["m", "m"], run = "save",   desc = "Bookmark CWD" },
 	{ on = "'",         run = "jump",  desc = "Jump to bookmark" },
 	{ on = ["b", "d"],  run = "delete", desc = "Delete bookmark" },
