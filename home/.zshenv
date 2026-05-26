@@ -55,6 +55,8 @@ export PYTHON_HISTORY="$XDG_DATA_HOME/python/history"
 export TEXMFHOME="$XDG_DATA_HOME/texmf"
 export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 export XCOMPOSEFILE="$XDG_CONFIG_HOME/XCompose"
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+export OLLAMA_MODELS=$XDG_DATA_HOME/ollama/models
 
 # Ensure the XDG state directory for zsh history exists
 mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}/zsh"
