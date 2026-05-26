@@ -1,0 +1,88 @@
+# Taskwarrior configuration file
+
+# --- Files & Locations ---
+data.location=~/.local/share/task
+hooks.location=~/.config/task/hooks
+
+# --- Theme & Colors ---
+# Solarized Dark is a high-contrast, easy-on-the-eyes theme
+include /usr/share/doc/task/rc/solarized-dark-256.theme
+
+# --- General Settings ---
+confirmation=no
+search.case.sensitive=no
+default.command=next
+bulk=3
+weekstart=Monday
+
+# --- Urgency Coefficients ---
+# Re-enabling some standard urgency to help prioritization
+urgency.active.coefficient=12.0
+urgency.due.coefficient=12.0
+urgency.blocking.coefficient=8.0
+urgency.blocked.coefficient=-5.0
+urgency.priority.coefficient=6.0
+urgency.project.coefficient=2.0
+urgency.tags.coefficient=1.0
+urgency.annotations.coefficient=1.0
+urgency.age.coefficient=2.0
+
+# User specific tag urgency
+urgency.user.tag.absolute.coefficient=100
+urgency.user.tag.NOW.coefficient=40
+urgency.user.tag.Now.coefficient=30
+urgency.user.tag.now.coefficient=20
+urgency.user.tag.doing.coefficient=10
+urgency.user.tag.problem.coefficient=10
+urgency.user.tag.next.coefficient=5
+urgency.user.tag.wait.coefficient=-2
+urgency.user.tag.pause.coefficient=-5
+urgency.user.tag.zzz.coefficient=-5
+urgency.user.tag.sleep.coefficient=-10
+urgency.user.tag.running.coefficient=-15
+
+# --- UDA (User Defined Attributes) ---
+uda.effort.type=string
+uda.effort.label=Effort
+uda.effort.values=s,m,l,xl,xxl
+urgency.uda.effort.s.coefficient=1.5
+urgency.uda.effort.m.coefficient=1.1
+urgency.uda.effort.l.coefficient=1
+urgency.uda.effort.xl.coefficient=0
+urgency.uda.effort.xxl.coefficient=-0.2
+
+uda.score.type=numeric
+uda.score.label=Score
+urgency.uda.score.coefficient=2
+
+uda.reviewed.type=date
+uda.reviewed.label=Reviewed
+
+# --- Reports ---
+# Optimized 'next' report
+report.next.labels=ID,Active,Age,Deps,P,Effort,Project,Tag,Due,Description,Urg
+report.next.columns=id,start.age,entry.age,depends,priority,effort,project,tags,due.relative,description,urgency
+report.next.sort=urgency-
+
+# Dashboard report for a quick overview
+report.dashboard.description=Dashboard
+report.dashboard.columns=id,start.age,priority,project,tags,due.relative,description,urgency
+report.dashboard.labels=ID,Active,P,Project,Tags,Due,Description,Urg
+report.dashboard.sort=urgency-,priority-,due+
+report.dashboard.filter=+PENDING (priority:H or due.before:now+3days or +active)
+
+# --- Aliases ---
+alias.l=list
+alias.n=next
+alias.d=done
+alias.s=start
+alias.stop=stop
+alias.u=urgency
+alias.dash=dashboard
+
+# --- Timewarrior Integration ---
+# Keeping your existing hooks
+hooks.on-modify=on
+
+# News version
+news.version=3.4.2
