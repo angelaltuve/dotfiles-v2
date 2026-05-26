@@ -51,10 +51,10 @@ stow */
 | Categoría | Apps |
 |-----------|------|
 | **WM/UI** | Sway, Waybar, Rofi, Mako, Foot, Alacritty, Kitty, IMV, Yazi |
-| **Shell** | Zsh, Tmux, Shell scripts |
+| **Shell** | Zsh, Tmux, Scripts de shell, XCompose |
 | **Editores** | Neovim, SC-IM |
-| **GTK/Qt** | GTK3/4, Qt5ct, Qt6ct, Fontconfig |
-| **Descargas** | yt-dlp, Aria2, Wget, Newsboat, RMPC, MPV |
-| **Dev** | Pandoc, Lazygit, Mise, Calcurse |
+| **GTK/Qt** | GTK2, GTK3/4, Qt5ct, Qt6ct, Fontconfig |
+| **Descargas** | yt-dlp, Aria2, Wget, Newsboat, RMPC, MPD, MPV |
+| **Dev** | Pandoc, Lazygit, Mise, Calcurse, Latexmk, Taskwarrior, Timewarrior |
 | **AUR** | Paru, Yay |
-| **Sistema** | Btop, Htop, Fastfetch, Eza, Zathura |
+| **Sistema** | Btop, Htop, Fastfetch, Eza, Zathura, xdg-desktop-portal-wlr |
