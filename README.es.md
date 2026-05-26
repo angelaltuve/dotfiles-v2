@@ -27,16 +27,16 @@ Cada programa vive en su propio directorio y se despliega con Stow:
 
 ```bash
 # Arch Linux
-pacman -S stow alacritty sway waybar rofi mako foot kitty imv yazi zsh tmux neovim sc-im gtk3 gtk4 qt5ct qt6ct fontconfig yt-dlp aria2 wget newsboat  rmpc mpv pandoc lazygit calcurse btop htop fastfetch eza zathura
+pacman -S stow alacritty sway waybar rofi mako foot kitty imv yazi zsh tmux neovim sc-im gtk2 gtk3 gtk4 qt5ct qt6ct fontconfig yt-dlp aria2 wget newsboat rmpc mpv mpd task timew xdg-desktop-portal-wlr pandoc lazygit calcurse texlive-binextra btop htop fastfetch eza zathura
 
 # Debian / Ubuntu
-apt install stow alacritty sway waybar rofi mako foot kitty imv zsh tmux neovim gtk3 gtk4 qt5ct qt6ct fontconfig yt-dlp aria2 wget newsboat  mpv pandoc lazygit calcurse btop htop fastfetch eza zathura
+apt install stow alacritty sway waybar rofi mako foot kitty imv zsh tmux neovim gtk2 gtk3 gtk4 qt5ct qt6ct fontconfig yt-dlp aria2 wget newsboat mpv mpd taskwarrior timewarrior xdg-desktop-portal-wlr pandoc lazygit calcurse texlive-latex-extra btop htop fastfetch eza zathura
 
 # Fedora
-dnf install stow alacritty sway waybar rofi mako foot kitty imv zsh tmux neovim gtk3 gtk4 qt5ct qt6ct fontconfig yt-dlp aria2 wget newsboat  mpv pandoc lazygit calcurse btop htop fastfetch eza zathura
+dnf install stow alacritty sway waybar rofi mako foot kitty imv zsh tmux neovim gtk2 gtk3 gtk4 qt5ct qt6ct fontconfig yt-dlp aria2 wget newsboat mpv mpd task timewarrior xdg-desktop-portal-wlr pandoc lazygit calcurse texlive-latexmk btop htop fastfetch eza zathura
 ```
 
-> Algunos paquetes como `yazi`, `sc-im`, `rmpc`, `paru` y `yay` pueden requerir AUR, COPR o instalación manual.
+> Paquetes como `sc-im`, `paru` y `yay` pueden requerir AUR, COPR o instalación manual.
 
 ### Despliegue
 
