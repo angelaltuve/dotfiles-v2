@@ -989,7 +989,6 @@ dap.listeners.before.launch.dapui = dapui.open
 dap.listeners.before.event_terminated.dapui = dapui.close
 dap.listeners.before.event_exited.dapui = dapui.close
 
--- Python adapter (via debugpy, asumiento que está instalado)
 dap.adapters.python = {
 	type = "executable",
 	command = "python",
@@ -1005,7 +1004,6 @@ dap.configurations.python = {
 	},
 }
 
--- C/C++ adapter (codelldb via mason)
 dap.adapters.codelldb = {
 	type = "server",
 	port = "${port}",
@@ -1030,7 +1028,6 @@ dap.configurations.c = {
 
 dap.configurations.cpp = dap.configurations.c
 
--- Bash adapter (bash-debug-adapter via mason)
 dap.adapters.bash = {
 	type = "executable",
 	command = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bash-debug-adapter",
@@ -1150,3 +1147,30 @@ vim.keymap.set("t", "<C-q>", function()
 		terminal_state.is_open = false
 	end
 end, { noremap = true, silent = true, desc = "Close floating terminal" })
+
+require("mini.clue").setup({
+	triggers = {
+		{ mode = "n", keys = "<Leader>" },
+		{ mode = "x", keys = "<Leader>" },
+		{ mode = "n", keys = "g" },
+		{ mode = "x", keys = "g" },
+		{ mode = "n", keys = "z" },
+		{ mode = "n", keys = "<C-w>" },
+		{ mode = "n", keys = "]" },
+		{ mode = "n", keys = "[" },
+	},
+	clues = {
+		require("mini.clue").gen_clues.builtin(),
+		require("mini.clue").gen_clues.g(),
+		require("mini.clue").gen_clues.marks(),
+		require("mini.clue").gen_clues.registers(),
+		require("mini.clue").gen_clues.windows(),
+		require("mini.clue").gen_clues.z(),
+	},
+	window = {
+		delay = 300,
+		config = {
+			width = "auto",
+		},
+	},
+})

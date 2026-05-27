@@ -89,6 +89,10 @@
       "rev": "917780ec88601656c0ea376bea112da137acffc5",
       "src": "https://github.com/obsidian-nvim/obsidian.nvim"
     },
+    "privymd.nvim": {
+      "rev": "29b985381b47ab6a677f67ef1dad50d75ff63cd6",
+      "src": "https://github.com/icarios-dev/privymd.nvim"
+    },
     "render-markdown.nvim": {
       "rev": "629eb9533ec989d9d5c6cab8f3ad5372422c24e0",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
