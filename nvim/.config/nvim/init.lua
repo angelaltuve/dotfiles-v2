@@ -635,7 +635,6 @@ end, { desc = "FZF Keymaps" })
 
 require("mini.ai").setup({})
 require("mini.comment").setup({})
-require("mini.move").setup({})
 require("mini.surround").setup({})
 require("mini.cursorword").setup({})
 require("mini.indentscope").setup({})
@@ -1061,9 +1060,9 @@ end, { desc = "Open DAP REPL" })
 vim.g.dadbod_local_connectors = {}
 vim.g.dadbod_enable_tabular_mode = false
 
-vim.keymap.set("n", "<leader>db", "<cmd>DBUI<CR>", { desc = "DB UI toggle" })
-vim.keymap.set("n", "<leader>dq", "<cmd>DBUIQuery<CR>", { desc = "DB UI query" })
-vim.keymap.set("n", "<leader>dr", "<cmd>DBUIQuickQuery<CR>", { desc = "DB quick query" })
+vim.keymap.set("n", "<leader>Db", "<cmd>DBUI<CR>", { desc = "DB UI toggle" })
+vim.keymap.set("n", "<leader>Dq", "<cmd>DBUIQuery<CR>", { desc = "DB UI query" })
+vim.keymap.set("n", "<leader>Dr", "<cmd>DBUIQuickQuery<CR>", { desc = "DB quick query" })
 
 vim.keymap.set("n", "<leader>vs", "<cmd>VenvSelect<cr>", { desc = "Select Python venv" })
 
