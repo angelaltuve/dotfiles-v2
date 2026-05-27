@@ -296,7 +296,7 @@ vim.keymap.set("n", "<leader>pa", function() -- show file path
 	print("file:", path)
 end, { desc = "Copy full file path" })
 
-vim.keymap.set("n", "<leader>td", function()
+vim.keymap.set("n", "<leader>dt", function()
 	vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle diagnostics" })
 
