@@ -1156,16 +1156,15 @@ require("mini.clue").setup({
 		{ mode = "x", keys = "g" },
 		{ mode = "n", keys = "z" },
 		{ mode = "n", keys = "<C-w>" },
-		{ mode = "n", keys = "]" },
-		{ mode = "n", keys = "[" },
+
 	},
 	clues = {
-		require("mini.clue").gen_clues.builtin(),
 		require("mini.clue").gen_clues.g(),
 		require("mini.clue").gen_clues.marks(),
 		require("mini.clue").gen_clues.registers(),
 		require("mini.clue").gen_clues.windows(),
 		require("mini.clue").gen_clues.z(),
+		require("mini.clue").gen_clues.square_brackets(),
 	},
 	window = {
 		delay = 300,
