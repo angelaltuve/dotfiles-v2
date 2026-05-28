@@ -39,6 +39,7 @@ export PARALLEL_HOME="$XDG_CONFIG_HOME/parallel"
 export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
 export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
+export JUPYTER_DATA_DIR="$XDG_DATA_HOME/jupyter"
 
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
