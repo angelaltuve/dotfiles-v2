@@ -58,6 +58,7 @@ export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 export XCOMPOSEFILE="$XDG_CONFIG_HOME/XCompose"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export OLLAMA_MODELS=$XDG_DATA_HOME/ollama/models
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 
 # Ensure the XDG state directory for zsh history exists
 mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}/zsh"
