@@ -1,30 +1,24 @@
 #!/bin/bash
 
-configs=$(ls /etc/wireguard/*.conf 2>/dev/null | xargs -n1 basename -s .conf)
-[[ -z $configs ]] && { notify-send -u low "No WireGuard configs in /etc/wireguard/"; exit 1; }
+configs=(/etc/wireguard/*.conf)
+(( ${#configs[@]} )) || { notify-send -u low "No WireGuard configs in /etc/wireguard/"; exit 1; }
 
-active=$(wg show 2>/dev/null | grep ^interface | awk '{print $2}')
+declare -A active
+while IFS= read -r iface; do active[$iface]=1; done < <(wg show 2>/dev/null | awk '/^interface/{print $2}')
 
-list=""
-while IFS= read -r c; do
-  if echo "$active" | grep -qxF "$c"; then
-    list+="  $c\n"
-  else
-    list+="  $c\n"
-  fi
-done <<< "$configs"
+list=()
+for conf in "${configs[@]}"; do
+  name=${conf##*/}; name=${name%.conf}
+  list+=("${active[$name]:+}  $name")
+done
 
-choice=$(echo -e "$list" | rofi -dmenu -p "WireGuard" -i) || exit 0
+choice=$(printf '%s\n' "${list[@]}" | rofi -dmenu -p "WireGuard" -i) || exit 0
 
-name="${choice#*  }"
+name="${choice##*  }"
 
-case $choice in
-  *)
-    sudo wg-quick down "$name" && notify-send -u low "WireGuard: $name disconnected"
-    ;;
-  *)
-    sudo wg-quick up "$name" && notify-send -u low "WireGuard: $name connected"
-    ;;
+case ${choice%% *} in
+  ) sudo wg-quick down "$name" && notify-send -u low "WireGuard: $name disconnected";;
+  ) sudo wg-quick up "$name" && notify-send -u low "WireGuard: $name connected";;
 esac
 
 pkill -RTMIN+11 waybar 2>/dev/null || true
