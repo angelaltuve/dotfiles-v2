@@ -177,6 +177,7 @@ exec_always {
     # pidof gnome-keyring-daemon || gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
     pidof keepassxc || keepassxc --minimized 2>/dev/null
     pidof swayosd-server || swayosd-server
+    pidof calcurse || calcurse --daemon
 }
 
 # Window colors
