@@ -174,7 +174,6 @@ exec_always {
     pidof wl-paste || wl-paste --watch cliphist store
     pidof wlsunset || wlsunset -S '06:30' -s '19:30' -d 1800
     pidof mako || mako
-    # pidof gnome-keyring-daemon || gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
     pidof keepassxc || keepassxc --minimized 2>/dev/null
     pidof swayosd-server || swayosd-server
     pidof calcurse || calcurse --daemon
