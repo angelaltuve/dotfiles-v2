@@ -117,7 +117,7 @@ general.systemevents=yes
 # ─── Notifications ─────────────────────────────────────────────────────────────
 
 # Notification command (e.g. notify-send, echo, beep)
-notification.command=printf '\a'
+notification.command=notify-send --app-name="Calcurse" "Reminder" "$*"
 
 # Which items to notify:
 #   flagged-only   = only flagged items
