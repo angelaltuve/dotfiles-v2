@@ -836,7 +836,13 @@ require("blink.cmp").setup({
 		["<S-Tab>"] = { "snippet_backward", "fallback" },
 	},
 	appearance = { nerd_font_variant = "mono" },
-	completion = { menu = { auto_show = true } },
+	completion = {
+		menu = {
+			auto_show = function()
+				return vim.bo.filetype ~= "markdown"
+			end,
+		},
+	},
 	sources = { default = { "lsp", "path", "buffer", "snippets", "obsidian" } },
 	snippets = {
 		expand = function(snippet)
