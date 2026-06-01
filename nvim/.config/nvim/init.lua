@@ -542,7 +542,7 @@ local function setup_obsidian()
 			template = "diario",
 		},
 		templates = {
-			subdir = "plantillas",
+			subdir = "0_plantillas",
 		},
 		note_id_func = function(title)
 			local suffix = ""
