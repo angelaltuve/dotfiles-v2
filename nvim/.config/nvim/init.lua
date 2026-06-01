@@ -637,7 +637,30 @@ require("mini.trailspace").setup({})
 require("mini.bufremove").setup({})
 require("mini.notify").setup({})
 require("mini.icons").setup({})
-require("mini.starter").setup({})
+local starter = require("mini.starter")
+local sec = function(name, action, section)
+	return { name = name, action = action, section = section }
+end
+starter.setup({
+	evaluate_single = true,
+	items = {
+		sec("Find Files", "lua require('fzf-lua').files()", "Fzf-Lua"),
+		sec("Recent Files", "lua require('fzf-lua').oldfiles()", "Fzf-Lua"),
+		sec("Live Grep", "lua require('fzf-lua').live_grep()", "Fzf-Lua"),
+		sec("Today's Note", "Obsidian today", "Obsidian"),
+		sec("New Note", "Obsidian new", "Obsidian"),
+		sec("Lazygit", "lua vim.fn.jobstart('foot -e lazygit', {detach = true})", "Tools"),
+		sec("NvimTree", "lua require('nvim-tree.api').tree.toggle()", "Tools"),
+		sec("Terminal", "lua vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<leader>t', true, false, true), 'n', false)", "Tools"),
+		sec("Quit", "qa", "Exit"),
+	},
+	header = "Neovim",
+	footer = "j/k navigate · <CR> open · q quit",
+	content_hooks = {
+		starter.gen_hook.adding_bullet(),
+		starter.gen_hook.aligning("center", "center"),
+	},
+})
 require("mini.trailspace").setup({})
 
 require("mini.diff").setup({
