@@ -466,7 +466,6 @@ vim.pack.add({
 	"https://github.com/jay-babu/mason-nvim-dap.nvim",
 	"https://github.com/nvim-neotest/nvim-nio",
 	{ src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
-	"https://github.com/icarios-dev/privymd.nvim",
 })
 
 -- ============================================================================
@@ -583,11 +582,6 @@ end
 setup_obsidian()
 
 require("render-markdown").setup({})
-
-require("privymd").setup({
-	auto_decrypt = true,
-	auto_encrypt = true,
-})
 
 require("mtoc").setup({
 	auto_update = true,
