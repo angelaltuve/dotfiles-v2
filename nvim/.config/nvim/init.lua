@@ -537,7 +537,7 @@ local function setup_obsidian()
 		picker = { name = "fzf-lua" },
 		daily_notes = {
 			folder = "diario",
-			date_format = "%Y-%m-%d",
+			date_format = "%Y/%m/%Y-%m-%d-%A",
 			alias_format = "%B %-d, %Y",
 			template = "diario",
 		},
