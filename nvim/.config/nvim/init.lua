@@ -280,6 +280,14 @@ vim.keymap.set("n", "<C-Down>", ":resize -2<CR>", { desc = "Decrease window heig
 vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease window width" })
 vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase window width" })
 
+vim.keymap.set("n", "<leader>Tn", ":tabnew<CR>", { desc = "New tab" })
+vim.keymap.set("n", "<leader>Tc", ":tabclose<CR>", { desc = "Close tab" })
+vim.keymap.set("n", "<leader>To", ":tabonly<CR>", { desc = "Close other tabs" })
+vim.keymap.set("n", "<leader>Tl", ":tabnext<CR>", { desc = "Next tab" })
+vim.keymap.set("n", "<leader>Th", ":tabprevious<CR>", { desc = "Previous tab" })
+vim.keymap.set("n", "<leader>T]", ":tabmove +1<CR>", { desc = "Move tab right" })
+vim.keymap.set("n", "<leader>T[", ":tabmove -1<CR>", { desc = "Move tab left" })
+
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
 vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
@@ -565,7 +573,7 @@ local function setup_obsidian()
 		vim.cmd("Obsidian new")
 	end, { desc = "New note" })
 
-	vim.keymap.set("n", "<leader>nd", function()
+	vim.keymap.set("n", "<leader>nN", function()
 		require("obsidian").util.template("", vim.fn.input("Title: "))
 	end, { desc = "New note from template" })
 
@@ -575,8 +583,8 @@ local function setup_obsidian()
 	vim.keymap.set("n", "<leader>nw", "<cmd>Obsidian workspace<cr>", { desc = "Switch workspace" })
 	vim.keymap.set("n", "<leader>nl", "<cmd>Obsidian links<cr>", { desc = "Show backlinks" })
 	vim.keymap.set("n", "<leader>nb", "<cmd>Obsidian backlinks<cr>", { desc = "Show backlinks" })
-	vim.keymap.set("n", "<leader>ntg", "<cmd>Obsidian tags<cr>", { desc = "Show tags" })
-	vim.keymap.set("n", "<leader>nto", "<cmd>Obsidian toggle_checkbox<cr>", { desc = "Toggle checkbox" })
+	vim.keymap.set("n", "<leader>nT", "<cmd>Obsidian tags<cr>", { desc = "Show tags" })
+	vim.keymap.set("n", "<leader>nO", "<cmd>Obsidian toggle_checkbox<cr>", { desc = "Toggle checkbox" })
 end
 
 setup_obsidian()
@@ -611,6 +619,9 @@ end, { desc = "FZF Files" })
 vim.keymap.set("n", "<leader>fg", function()
 	require("fzf-lua").live_grep()
 end, { desc = "FZF Live Grep" })
+vim.keymap.set("n", "<leader>fo", function()
+	require("fzf-lua").oldfiles()
+end, { desc = "FZF Old Files" })
 vim.keymap.set("n", "<leader>fb", function()
 	require("fzf-lua").buffers()
 end, { desc = "FZF Buffers" })
@@ -626,6 +637,12 @@ end, { desc = "FZF Diagnostics Workspace" })
 vim.keymap.set("n", "<leader>fk", function()
 	require("fzf-lua").keymaps()
 end, { desc = "FZF Keymaps" })
+vim.keymap.set("n", "<leader>fT", function()
+	require("fzf-lua").tabs()
+end, { desc = "FZF Tabs" })
+vim.keymap.set("n", "<leader>fm", function()
+	require("fzf-lua").manpages()
+end, { desc = "FZF Manpages" })
 
 require("mini.ai").setup({})
 require("mini.comment").setup({})
@@ -786,20 +803,21 @@ local function lsp_on_attach(ev)
 		vim.lsp.buf.definition()
 	end, opts)
 
-	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+	vim.keymap.set("n", "<leader>cA", vim.lsp.buf.code_action, opts)
 	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 
-	vim.keymap.set("n", "<leader>D", function()
+	vim.keymap.set("n", "<leader>dL", function()
 		vim.diagnostic.open_float({ scope = "line" })
 	end, opts)
-	vim.keymap.set("n", "<leader>d", function()
+
+	vim.keymap.set("n", "<leader>dd", function()
 		vim.diagnostic.open_float({ scope = "cursor" })
 	end, opts)
-	vim.keymap.set("n", "<leader>nd", function()
+	vim.keymap.set("n", "<leader>dn", function()
 		vim.diagnostic.jump({ count = 1 })
 	end, opts)
 
-	vim.keymap.set("n", "<leader>pd", function()
+	vim.keymap.set("n", "<leader>dp", function()
 		vim.diagnostic.jump({ count = -1 })
 	end, opts)
 
@@ -1069,13 +1087,13 @@ dap.configurations.sh = {
 }
 
 -- Keymaps
-vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
-vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Continue / start debugging" })
-vim.keymap.set("n", "<leader>do", dap.step_over, { desc = "Step over" })
-vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Step into" })
-vim.keymap.set("n", "<leader>dO", dap.step_out, { desc = "Step out" })
-vim.keymap.set("n", "<leader>du", dapui.toggle, { desc = "Toggle DAP UI" })
-vim.keymap.set("n", "<leader>dr", function()
+vim.keymap.set("n", "<leader>Db", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
+vim.keymap.set("n", "<leader>Dc", dap.continue, { desc = "Continue / start debugging" })
+vim.keymap.set("n", "<leader>Do", dap.step_over, { desc = "Step over" })
+vim.keymap.set("n", "<leader>Di", dap.step_into, { desc = "Step into" })
+vim.keymap.set("n", "<leader>DO", dap.step_out, { desc = "Step out" })
+vim.keymap.set("n", "<leader>Du", dapui.toggle, { desc = "Toggle DAP UI" })
+vim.keymap.set("n", "<leader>Dr", function()
 	dapui.float_element("repl")
 end, { desc = "Open DAP REPL" })
 
@@ -1083,9 +1101,9 @@ end, { desc = "Open DAP REPL" })
 vim.g.dadbod_local_connectors = {}
 vim.g.dadbod_enable_tabular_mode = false
 
-vim.keymap.set("n", "<leader>Db", "<cmd>DBUI<CR>", { desc = "DB UI toggle" })
-vim.keymap.set("n", "<leader>Dq", "<cmd>DBUIQuery<CR>", { desc = "DB UI query" })
-vim.keymap.set("n", "<leader>Dr", "<cmd>DBUIQuickQuery<CR>", { desc = "DB quick query" })
+vim.keymap.set("n", "<leader>ub", "<cmd>DBUI<CR>", { desc = "DB UI toggle" })
+vim.keymap.set("n", "<leader>uq", "<cmd>DBUIQuery<CR>", { desc = "DB UI query" })
+vim.keymap.set("n", "<leader>ur", "<cmd>DBUIQuickQuery<CR>", { desc = "DB quick query" })
 
 vim.keymap.set("n", "<leader>vs", "<cmd>VenvSelect<cr>", { desc = "Select Python venv" })
 
@@ -1182,6 +1200,14 @@ require("mini.clue").setup({
 		{ mode = "n", keys = "z" },
 		{ mode = "n", keys = "<C-w>" },
 
+		{ mode = "n", keys = "<leader>d" },
+		{ mode = "n", keys = "<leader>D" },
+		{ mode = "n", keys = "<leader>f" },
+		{ mode = "n", keys = "<leader>g" },
+		{ mode = "n", keys = "<leader>h" },
+		{ mode = "n", keys = "<leader>n" },
+		{ mode = "n", keys = "<leader>T" },
+		{ mode = "n", keys = "<leader>u" },
 	},
 	clues = {
 		require("mini.clue").gen_clues.g(),
@@ -1190,9 +1216,18 @@ require("mini.clue").setup({
 		require("mini.clue").gen_clues.windows(),
 		require("mini.clue").gen_clues.z(),
 		require("mini.clue").gen_clues.square_brackets(),
+
+		{ mode = "n", keys = "<leader>d", desc = " Diagnostics" },
+		{ mode = "n", keys = "<leader>D", desc = " Debug (DAP)" },
+		{ mode = "n", keys = "<leader>f", desc = " Find / Fzf" },
+		{ mode = "n", keys = "<leader>g", desc = " Go to (LSP)" },
+		{ mode = "n", keys = "<leader>h", desc = " Git / Hunk" },
+		{ mode = "n", keys = "<leader>n", desc = " Obsidian Notes" },
+		{ mode = "n", keys = "<leader>T", desc = " Tabs" },
+		{ mode = "n", keys = "<leader>u", desc = " Database" },
 	},
 	window = {
-		delay = 300,
+		delay = 100,
 		config = {
 			width = "auto",
 		},
