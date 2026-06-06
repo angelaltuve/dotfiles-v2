@@ -41,6 +41,6 @@ general.periodicsave=5
 general.systemevents=yes
 
 # ─── Notifications ─────────────────────────────────────────────────────────────
-notification.command=calcurse -n | tail -n 1 | while read SPAM_OUT; do notify-send -u normal "$SPAM_OUT"; done
+notification.command=calcurse -n | tail -n 1 | while read SPAM_OUT; do notify-calcurse "$SPAM_OUT"; done
 notification.notifyall=flagged-only
 notification.warning=600
