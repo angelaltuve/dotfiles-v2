@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+header() {
+  echo ""
+  echo "===> $*"
+}
+
+finish() {
+  echo ""
+  echo "=== Done ==="
+  echo "Reboot recommended if kernel was updated."
+}
+trap finish EXIT
+
+header "System packages (pacman)"
+sudo pacman -Syu
+
+header "AUR packages (yay)"
+yay -Syu --devel --timebuild
+
+header "Rust crates (cargo)"
+if command -v cargo &>/dev/null; then
+  if ! command -v cargo-install-update &>/dev/null; then
+    echo "Installing cargo-update..."
+    cargo install cargo-update
+  fi
+  cargo install-update -a
+fi
+
+header "Node.js global packages (npm)"
+if command -v npm &>/dev/null; then
+  npm update -g 2>/dev/null || echo "No global packages to update"
+fi
+
+header "Go binaries (go install)"
+if command -v go &>/dev/null; then
+  go tools update 2>/dev/null || echo "No Go tools to update"
+fi
+
+header "Tool versions (mise)"
+if command -v mise &>/dev/null; then
+  mise upgrade
+fi
+
+header "Flatpak"
+if command -v flatpak &>/dev/null; then
+  flatpak update -y
+fi
+
+header "Python apps (pipx)"
+if command -v pipx &>/dev/null; then
+  pipx upgrade-all
+fi
+
+header "Lua rocks (luarocks)"
+if command -v luarocks &>/dev/null; then
+  luarocks update 2>/dev/null || luarocks list 2>/dev/null | tail -5
+fi

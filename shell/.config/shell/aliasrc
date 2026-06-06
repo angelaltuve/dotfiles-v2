@@ -117,6 +117,7 @@ alias dl='sudo dmsetup ls'
 alias cupsd='sudo cupsd -f'
 alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias update-fc='sudo fc-cache -fv'
+alias update-all='~/.local/bin/update-all'
 alias gpgrestart='gpgconf --kill gpg-agent && gpg-agent --daemon'
 alias reload='source ~/.zshenv'
 
