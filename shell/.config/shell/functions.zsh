@@ -17,12 +17,13 @@ y() {
 # Custom cd wrapper using zoxide with interactive fallback
 _zoxide_cd() {
   if (( $# == 0 )); then
-    builtin cd ~ || return
+    builtin cd
+  elif [[ "$1" == "-" ]]; then
+    builtin cd -
   elif [[ -d $1 ]]; then
-    builtin cd "$1" || return
+    builtin cd "$1"
   else
-    \z "$@" || { echo "zoxide: no match"; return 1 }
-    pwd
+    \z "$@"
   fi
 }
 compdef _cd _zoxide_cd
@@ -49,7 +50,7 @@ _scp_fzf() {
     echo "Usage: sff <dest> (e.g. sff host:/tmp/)"; return 1
   fi
   local file
-  file=$(fd --type f --changed-within 2w | fzf --preview 'bat --style=numbers --color=always {}')
+  file=$(fd . ~ --type f --changed-within 2w | fzf --preview 'bat --style=numbers --color=always {}')
   [[ -n $file ]] && scp "$file" "$1"
 }
 
@@ -57,7 +58,7 @@ _scp_fzf() {
 # Find and edit a custom user script from ~/.local/bin/ using fzf
 _edit_script() {
   local c
-  c=$(fd . "$HOME/.local/bin/" --type f --exact-depth 1 --printf '%P\n' | fzf --height 40% --reverse) || return
+  c=$(fd . "$HOME/.local/bin/" --type f --exact-depth 1 | fzf --height 40% --reverse) || return
   [[ -n $c ]] && ${EDITOR:-nvim} "$HOME/.local/bin/$c"
 }
 
@@ -67,5 +68,5 @@ _convert_video() {
   if (( $# < 2 )); then
     echo "Usage: convi <input> <output>"; return 1
   fi
-  ffmpeg -i "$1" -c:v libx264 -crf 25 "$2"
+  ffmpeg -i "$1" -c:v libx264 -crf 25 -c:a aac -b:a 128k "$2"
 }
