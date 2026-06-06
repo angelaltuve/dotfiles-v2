@@ -1,0 +1,38 @@
+# general
+reload-period 15
+scrolloff 8
+scrollwrap true
+download-max-connections 500
+user-agent "Mozilla/5.0 (X11; Linux x86_64)"
+notification-command notify-send
+database-analyze-on-startup true
+database-clean-on-startup true
+
+# display
+status-show-menu-path false
+pager-centering true
+list-entry-date-format "%b %d %R"
+
+# browser
+open-in-browser-command linkhandler "%l"
+copy-to-clipboard-command auto
+
+# catppuccin mocha
+color-status            bold color183 default
+color-status-info       bold color75  default
+color-status-fail       bold color210 default
+color-list-section                color250 default
+color-list-section-selected       color252 color237
+color-list-section-unread         bold    color114 default
+color-list-feed                   color250 default
+color-list-feed-selected          color252 color237
+color-list-feed-unread            bold    color114 default
+color-list-feed-failed            bold    color210 default
+color-list-item                   color250 default
+color-list-item-selected          color252 color237
+color-list-item-unread            bold    color114 default
+color-list-item-important         bold    color183 default
+
+# mpv for media
+bind  m exec setsid --fork mpv --no-terminal "%l" > /dev/null 2>&1
+bind  S exec ~/.local/bin/bookmark.sh "%l"
