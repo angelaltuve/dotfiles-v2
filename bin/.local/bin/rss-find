@@ -1,0 +1,78 @@
+#!/bin/sh
+url="$1"
+[ -z "$url" ] && printf 'Usage: rss-find <url>\n' >&2 && exit 1
+
+feeds_file="${HOME}/.config/newsraft/feeds"
+
+# YouTube
+if echo "$url" | grep -qE 'youtube\.com|youtu\.be'; then
+	channel_id="$(timeout 10 yt-dlp --print channel_id --simulate --no-warnings "$url" 2>/dev/null)"
+	if [ -z "$channel_id" ]; then
+		channel_id="$(
+			curl -sL "$url" 2>/dev/null |
+			grep -o 'channel_id=[A-Za-z0-9_-]*\|"channelId":"[A-Za-z0-9_-]*"' |
+			head -1 | sed 's/.*channel_id=//;s/.*"channelId":"//;s/"//'
+		)"
+	fi
+	[ -z "$channel_id" ] && printf 'Could not get channel_id\n' >&2 && exit 1
+	feed_url="https://www.youtube.com/feeds/videos.xml?channel_id=${channel_id}"
+	name="$(timeout 10 yt-dlp --print channel --simulate --no-warnings "$url" 2>/dev/null)"
+	[ -z "$name" ] && name="$feed_url"
+else
+	html="$(curl -sfLk "$url" 2>/dev/null)" || exit 1
+
+	base="$(printf '%s' "$url" | sed 's|\(https\?://[^/]*\).*|\1|')"
+
+	feed_url="$(echo "$html" | sed -n 's/.*<link[^>]*rel="alternate"[^>]*type="application\/\(rss\|atom\)+xml"[^>]*href="\([^"]*\)".*/\2/p' | head -1)"
+
+	case "$feed_url" in
+		http*) ;;
+		/*) feed_url="${base}${feed_url}" ;;
+		*) feed_url="${base}/${feed_url}" ;;
+	esac
+
+	if [ -z "$feed_url" ]; then
+		for path in /feed /rss /feed.xml /atom.xml /index.xml; do
+			ct="$(curl -sI "${base}${path}" 2>/dev/null | sed -n 's/^[Cc]ontent-[Tt]ype: *//p' | tr -d '\r')"
+			case "$ct" in application/rss+xml*|application/atom+xml*|text/xml*) feed_url="${base}${path}"; break ;; esac
+		done
+	fi
+
+	[ -z "$feed_url" ] && printf 'No RSS found\n' >&2 && exit 1
+
+	name="$(echo "$html" | sed -n 's/.*<title>[[:space:]]*\(.*\)[[:space:]]*<\/title>.*/\1/p' | head -1)"
+	[ -z "$name" ] && name="$feed_url"
+fi
+
+printf '\nFeed: %s\nName: %s\n\n' "$feed_url" "$name"
+
+printf 'Sections:\n'
+grep -n '^@' "$feeds_file" | sed 's/^\([0-9]*\):/  \1. /'
+printf '  a. End\n\n'
+printf 'Pick section [a]: '
+read -r choice || exit 1
+
+new_line="${feed_url} \"${name}\""
+
+if [ "$choice" != "a" ] && [ -n "$choice" ] && [ "$choice" -gt 0 ] 2>/dev/null; then
+	section_line="$(grep -n '^@' "$feeds_file" | sed -n "${choice}s/:.*//p")"
+	[ -z "$section_line" ] && printf 'Invalid section\n' >&2 && exit 1
+
+	total="$(wc -l < "$feeds_file")"
+	next="$(tail -n +"$((section_line + 1))" "$feeds_file" | grep -n '^@' | head -1 | cut -d: -f1)"
+	if [ -n "$next" ]; then
+		insert_at="$((section_line + next - 1))"
+	else
+		insert_at="$total"
+	fi
+
+	tmp="$(mktemp)"
+	head -n "$insert_at" "$feeds_file" > "$tmp"
+	printf '%s\n' "$new_line" >> "$tmp"
+	tail -n +"$((insert_at + 1))" "$feeds_file" >> "$tmp"
+	mv "$tmp" "$feeds_file"
+else
+	printf '%s\n' "$new_line" >> "$feeds_file"
+fi
+
+printf '✓ Added\n'
