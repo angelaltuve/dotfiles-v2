@@ -47,6 +47,7 @@ application/xml=nvim.desktop
 text/xml=nvim.desktop
 x-scheme-handler/about=browser.desktop
 text/html=browser.desktop
+x-scheme-handler/freetube=freetube.desktop
 
 [Added Associations]
 application/pdf=org.pwmt.zathura-pdf-mupdf.desktop;
