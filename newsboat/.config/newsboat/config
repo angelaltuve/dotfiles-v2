@@ -60,8 +60,6 @@ ignore-article "*" "link =~ \"youtube\\.com/shorts\""
 macro ,     open-in-browser
 macro v     set browser "setsid --fork mpv %u > /dev/null 2>&1" ; open-in-browser ; set browser linkhandler
 macro c     set browser "printf '%s' %u | kitty +kitten clipboard > /dev/null 2>&1" ; open-in-browser ; set browser linkhandler
-macro i     set pager "~/.config/newsboat/scripts/kitty-img-pager.sh %f" ; open ; set pager internal
-macro I     set browser "~/.config/newsboat/scripts/yt-thumb.sh %u" ; open-in-browser ; set browser linkhandler
 macro b     set browser "setsid --fork kitty podboat > /dev/null 2>&1" ; open-in-browser ; set browser linkhandler
 
 #--- Vim-style keys ---
