@@ -73,6 +73,7 @@ export FZF_DEFAULT_OPTS="--style minimal --color 16 --layout=reverse --height 30
 export FZF_CTRL_R_OPTS="--style minimal --color 16 --info inline --no-sort"
 
 # --- SSH (KeePassXC) ---
+export GPG_TTY=$(tty)
 export SSH_AUTH_SOCK="/tmp/ssh-agent.sock"
 
 # --- Qt ---
