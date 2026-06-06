@@ -474,6 +474,7 @@ vim.pack.add({
 	"https://github.com/jay-babu/mason-nvim-dap.nvim",
 	"https://github.com/nvim-neotest/nvim-nio",
 	{ src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
+	"https://github.com/kdheepak/lazygit.nvim",
 })
 
 -- ============================================================================
@@ -543,7 +544,7 @@ local function setup_obsidian()
 		},
 		picker = { name = "fzf-lua" },
 		daily_notes = {
-			folder = "diario",
+			folder = "1_diario",
 			date_format = "%Y/%m/%Y-%m-%d-%A",
 			alias_format = "%B %-d, %Y",
 			template = "diario",
@@ -561,7 +562,7 @@ local function setup_obsidian()
 			return suffix
 		end,
 		attachments = {
-			folder = "assets",
+			folder = "2_assets",
 		},
 		ui = {
 			enable = true,
@@ -1191,6 +1192,17 @@ vim.keymap.set("t", "<C-q>", function()
 	end
 end, { noremap = true, silent = true, desc = "Close floating terminal" })
 
+-- ============================================================================
+-- LAZYGIT
+-- ============================================================================
+vim.g.lazygit_floating_window_winblend = 0
+vim.g.lazygit_floating_window_border_chars = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+vim.g.lazygit_use_neovim_remote = true
+
+vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "LazyGit" })
+vim.keymap.set("n", "<leader>gf", "<cmd>LazyGitFilter<CR>", { desc = "LazyGit current file" })
+vim.keymap.set("n", "<leader>gF", "<cmd>LazyGitFilterCurrentFile<CR>", { desc = "LazyGit current file history" })
+
 require("mini.clue").setup({
 	triggers = {
 		{ mode = "n", keys = "<Leader>" },
@@ -1217,14 +1229,16 @@ require("mini.clue").setup({
 		require("mini.clue").gen_clues.z(),
 		require("mini.clue").gen_clues.square_brackets(),
 
-		{ mode = "n", keys = "<leader>d", desc = " Diagnostics" },
-		{ mode = "n", keys = "<leader>D", desc = " Debug (DAP)" },
-		{ mode = "n", keys = "<leader>f", desc = " Find / Fzf" },
-		{ mode = "n", keys = "<leader>g", desc = " Go to (LSP)" },
-		{ mode = "n", keys = "<leader>h", desc = " Git / Hunk" },
-		{ mode = "n", keys = "<leader>n", desc = " Obsidian Notes" },
-		{ mode = "n", keys = "<leader>T", desc = " Tabs" },
-		{ mode = "n", keys = "<leader>u", desc = " Database" },
+		{ mode = "n", keys = "<leader>d", desc = "Diagnostics" },
+		{ mode = "n", keys = "<leader>D", desc = "Debug (DAP)" },
+		{ mode = "n", keys = "<leader>f", desc = "Find / Fzf" },
+		{ mode = "n", keys = "<leader>g", desc = "Go to (LSP)" },
+		{ mode = "n", keys = "<leader>gg", desc = "LazyGit" },
+		{ mode = "n", keys = "<leader>gf", desc = "LazyGit file" },
+		{ mode = "n", keys = "<leader>h", desc = "Git / Hunk" },
+		{ mode = "n", keys = "<leader>n", desc = "Obsidian Notes" },
+		{ mode = "n", keys = "<leader>T", desc = "Tabs" },
+		{ mode = "n", keys = "<leader>u", desc = "Database" },
 	},
 	window = {
 		delay = 100,

@@ -33,6 +33,10 @@
       "rev": "9f3c6dd7868bcc116e9c1c1929ce063b978fa519",
       "src": "https://www.github.com/lewis6991/gitsigns.nvim"
     },
+    "lazygit.nvim": {
+      "rev": "a04ad0dbc725134edbee3a5eea29290976695357",
+      "src": "https://github.com/kdheepak/lazygit.nvim"
+    },
     "markdown-toc.nvim": {
       "rev": "869af35bce0c27e2006f410fa3f706808db4843d",
       "src": "https://github.com/hedyhli/markdown-toc.nvim"
