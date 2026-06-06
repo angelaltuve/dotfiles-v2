@@ -17,7 +17,7 @@ header "System packages (pacman)"
 sudo pacman -Syu
 
 header "AUR packages (yay)"
-yay -Syu --devel --timebuild
+yay -Syu --devel
 
 header "Rust crates (cargo)"
 if command -v cargo &>/dev/null; then
