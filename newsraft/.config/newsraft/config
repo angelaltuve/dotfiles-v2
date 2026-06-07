@@ -34,5 +34,5 @@ color-list-item-unread            bold    color114 default
 color-list-item-important         bold    color183 default
 
 # mpv for media
-bind  m exec setsid --fork mpv --no-terminal "%l" > /dev/null 2>&1
+bind  m exec setsid --fork mpv --force-window=immediate "%l" > /dev/null 2>&1
 bind  S exec ~/.local/bin/bookmark.sh "%l"
