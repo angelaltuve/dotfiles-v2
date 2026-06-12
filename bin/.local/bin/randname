@@ -1,0 +1,24 @@
+#!/tmp/faker_venv/bin/python3
+import random
+import sys
+from faker import Faker
+
+fake = Faker("en_US")
+
+N = int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2].isdigit() else 1
+mode = sys.argv[1] if len(sys.argv) > 1 else "num"
+
+for _ in range(N):
+    match mode:
+        case "num":
+            print(f"{fake.first_name_male()}{random.randint(1,9999)}")
+        case "full" | "adj":
+            print(f"{fake.first_name_male()}{fake.last_name()}")
+        case "us":
+            print(f"{fake.first_name_male()}_{fake.word()}_{random.randint(10,999)}")
+        case "email":
+            print(fake.ascii_email())
+        case "user":
+            print(fake.user_name())
+        case _:
+            print(f"{fake.first_name_male()}{random.randint(1,9999)}")
