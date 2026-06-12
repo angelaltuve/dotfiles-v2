@@ -7,7 +7,7 @@ export BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes
 REPO="/mnt/borg-backup/artix"
 EXCLUDE_FILE="/home/angel/.config/borg/exclude.txt"
 ARCHIVE_NAME="artix-$(date +%Y-%m-%d)"
-BACKUP_DIRS="/etc /home/angel /root"
+BACKUP_DIRS="/etc /home/angel /root /usr/local/bin"
 
 if ! mountpoint -q /mnt; then
     echo "ERROR: USB no montada en /mnt"
