@@ -8,3 +8,5 @@ fi
 
 snapper -c root create -c number -d "$DESC"
 snapper -c root cleanup number
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg
