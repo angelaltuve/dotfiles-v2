@@ -92,21 +92,14 @@ focus_on_window_activation smart
 for_window [app_id = "keepassxc"] floating enable, border pixel 1, resize set width 90 ppt height 90 ppt, move position center
 for_window [class = "KeePassXC"] floating enable, border pixel 1, resize set width 90 ppt height 90 ppt, move position center
 for_window [app_id = "org.telegram.desktop"] floating enable, resize set width 70 ppt height 80 ppt, move position center
-for_window [app_id = "localsend"] floating enable, move position center
+for_window [app_id = "localsend"] floating enable, resize set width 70 ppt height 80 ppt, move position center
 for_window [app_id = "lxappearance"] floating enable, resize set width 50 ppt height 60 ppt, move position center
 for_window [app_id = "pavucontrol"] floating enable, resize set width 40 ppt height 50 ppt, move position center
 for_window [app_id = "pcmanfm"] floating enable, resize set width 80 ppt height 80 ppt, move position center
 for_window [app_id = "polkit-gnome-authentication-agent-1"] floating enable, resize set width 45 ppt height 25 ppt, move position center
-for_window [app_id = "impala"] floating enable, resize set width 60 ppt height 80 ppt, move position center
-for_window [app_id = "wiremix"] floating enable, resize set width 60 ppt height 80 ppt, move position center
-for_window [app_id = "yay"] floating enable, resize set width 60 ppt height 80 ppt, move position center
 for_window [app_id = "terminal"] floating enable, resize set width 70 ppt height 75 ppt, move position center
 
 # Browser and file dialog specific rules
-for_window [title = "LibreWolf - Sharing Indicator"] floating enable
-for_window [title = "^Extension: .*" app_id = "librewolf"] floating enable
-for_window [title = "^Open File$"] floating enable
-for_window [title = "^Save As$"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_role="dialog"] floating enable
 for_window [window_role="pop-up"] floating enable
@@ -115,10 +108,6 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_role="Preferences"] floating enable
 for_window [window_type="menu"] floating enable
 for_window [window_role="About"] floating enable
-for_window [title="File Operation Progress"] floating enable, border pixel 1, sticky enable, resize set width 40 ppt height 30 ppt
-for_window [title="Save File"] floating enable
-for_window [title="Floating Window - Show Me The Key"] floating enable, sticky enable
-
 # Native Chromium dialogs (Wayland)
 for_window [app_id="chromium" title="^(Save As|Save File|Open File|Print|About|Bookmark|Import|Clear browsing data|Extensions|Settings|History)$"] floating enable, resize set width 60 ppt height 70 ppt, move position center
 for_window [app_id="chromium-browser-chromium" title="^(Save As|Save File|Open File|Print|About|Bookmark|Import|Clear browsing data|Extensions|Settings|History)$"] floating enable, resize set width 60 ppt height 70 ppt, move position center
@@ -136,19 +125,14 @@ for_window [app_id="librewolf" title="^Open File"] floating enable, resize set w
 for_window [app_id="librewolf" title="^Save File"] floating enable, resize set width 60 ppt height 70 ppt, move position center
 for_window [app_id="librewolf" title="^Clear Recent History"] floating enable
 
-# Picture-in-picture fallback (any browser)
-for_window [title="Picture in picture"] floating enable, sticky enable, resize set width 350 px height 197 px, move position 960 px 500 px
-
 # Chromium file chooser portal
 for_window [app_id="xdg-desktop-portal-gtk" title="^(Open File|Save As|Save File|Select Folder)$"] floating enable, resize set width 60 ppt height 70 ppt, move position center
 
 # Inhibit idle
-for_window [title="shortcuts"] floating enable, border pixel 1, resize set width 60 ppt height 70 ppt, move position center
 for_window [app_id="Chromium"] inhibit_idle fullscreen
 for_window [class="LibreWolf"] inhibit_idle fullscreen
 for_window [app_id="org.telegram.desktop"] inhibit_idle fullscreen
 for_window [app_id="mpv"] inhibit_idle fullscreen
-for_window [app_id="FBReader"] inhibit_idle fullscreen
 
 # XWayland indicator
 for_window [shell="xwayland"] title_format "<span>[X11] %title゜</span>"
@@ -176,7 +160,6 @@ exec_always {
     pidof gnome-keyring-daemon || gnome-keyring-daemon --start --components=secrets
     pidof wl-paste || wl-paste --watch cliphist store
     pidof mako || mako
-    pidof keepassxc || keepassxc --minimized 2>/dev/null
     pidof swayosd-server || swayosd-server
     pidof zpoweralertd || zpoweralertd \
       --when discharged 15 "loginctl suspend" \
@@ -345,9 +328,10 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# Passmenu
+# Passmenu & OTP
 bindsym $mod+o exec passmenu
 bindsym $mod+Shift+o exec passmenu --type
+bindsym $mod+F1 exec otp
 
 # Utilities & Media
 bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume raise
@@ -399,7 +383,7 @@ bindsym XF86AudioPrev         exec playerctl previous
 # bindsym $mod+Control+bracketright mpc seek +10
 
 # Atajos
-bindsym $mod+F1 exec kitty --title shortcuts -e shortcuts
+bindsym $mod+F2 exec kitty --title shortcuts -e shortcuts
 
 ### Status Bar
 bar {
