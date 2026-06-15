@@ -1,6 +1,6 @@
 #!/bin/bash
 
-configs=$(ls /etc/wireguard/*.conf 2>/dev/null | xargs -n1 basename -s .conf)
+configs=$(find /etc/wireguard -maxdepth 1 -name "*.conf" -printf "%f\n" | sed 's/\.conf$//')
 [[ -z $configs ]] && { notify-send -u low "No WireGuard configs in /etc/wireguard/"; exit 1; }
 
 active=$(wg show 2>/dev/null | grep ^interface | awk '{print $2}')

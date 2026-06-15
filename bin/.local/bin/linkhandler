@@ -23,7 +23,7 @@ case "$url" in
 *.mkv | *.webm | *.mp4 | *.MP4 | *.avi | *.mov | \
   *youtube.com/watch?v=* | *youtu.be/* | *youtube.com/embed/* | *youtube.com/shorts/* | *bitchute.com/video/* | *odysee.com/* | \
   *rumble.com/* | *twitch.tv/videos/* | *ok.ru/video/* | *tiktok.com/*/video/* | \
-  *ivoox.com/* | *go.ivoox.com/* | *spreaker.com/* | *anchor.fm/* | *podcasts.google.com/* | *podcasts.apple.com/* | *pca.st/* | *player.fm/*)
+  *ivoox.com/* | *spreaker.com/* | *anchor.fm/* | *podcasts.google.com/* | *podcasts.apple.com/* | *pca.st/* | *player.fm/*)
   setsid -f mpv --quiet "$url" >/dev/null 2>&1 &
   ;;
 *.png | *.jpg | *jpg* | *.jpeg | *.jpe | *.gif | *.webp | \

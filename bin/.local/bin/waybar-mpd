@@ -1,6 +1,6 @@
 #!/bin/bash
 
-status=$(mpc status 2>/dev/null) || { echo '{"text": "", "class": "hidden"}'; exit 0; }
+mpc status >/dev/null 2>&1 || { echo '{"text": "", "class": "hidden"}'; exit 0; }
 
 state=$(mpc status "%state%" 2>/dev/null)
 song=$(mpc current 2>/dev/null)

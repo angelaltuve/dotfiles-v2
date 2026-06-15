@@ -36,10 +36,6 @@
 
 unset GDK_BACKEND
 
-browsers="copy
-chromium
-librewolf"
-
 url="$1"
 host=$(url-parser --url host "$url" 2>/dev/null || echo "$url")
 

@@ -2,7 +2,7 @@
 msg="$*"
 [ -z "$msg" ] && exit 0
 
-for i in 1 2 3; do
+for _ in 1 2 3; do
 	notify-send -u normal "$msg" && exit 0
 	sleep 1
 done
