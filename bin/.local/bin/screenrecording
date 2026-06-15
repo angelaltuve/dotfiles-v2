@@ -17,7 +17,7 @@ case "$audio" in
   none)    audio_opts=(); label="Video only" ;;
 esac
 
-dest="${XDG_VIDEOS_DIR:-$HOME/Videos}"
+dest="$XDG_VIDEOS_DIR"
 mkdir -p "$dest"
 file="$dest/recording-$(date +%Y%m%d-%H%M%S).mp4"
 
