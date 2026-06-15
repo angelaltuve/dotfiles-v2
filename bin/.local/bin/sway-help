@@ -1,0 +1,29 @@
+#!/bin/sh
+
+[ "${BEMENU_OPTS}" = "" ] \
+&& export BEMENU_OPTS="-n -c -s -i \
+  -W 0.3 -H 26 -B 2 -l 10 \
+  -p ' ' -P '' --ch 16 --scrollbar always \
+  --fn 'JetBrainsMono Nerd Font 11' \
+  --nb '#1e1e2e' --nf '#cdd6f4' \
+  --ab '#1e1e2e' --af '#cdd6f4' \
+  --hb '#b4befe' --hf '#1e1e2e' \
+  --sb '#b4befe' --sf '#1e1e2e' \
+  --fb '#1e1e2e' --ff '#cdd6f4' \
+  --fbb '#1e1e2e' --fbf '#cdd6f4' \
+  --tb '#1e1e2e' --tf '#cdd6f4' \
+  --scb '#1e1e2e' --scf '#cdd6f4' \
+  --bdr '#b4befe'"
+
+rg -NoU '^# (.*)\nbindsym ([^ ]*) .*' \
+  -r '$2|$1' \
+  "$HOME/.config/sway/config" \
+| sed "s/\\\$mod/Mod4/g" \
+| awk -F '|' '{ printf "%26s: %s\n", $1, $2 }' > /tmp/swayhelp
+
+[ -s /tmp/swayhelp ] || {
+  notify-send -u low 'sway-help' 'No shortcuts found in config'
+  exit 1
+}
+
+bemenu -p "sway-help" < /tmp/swayhelp

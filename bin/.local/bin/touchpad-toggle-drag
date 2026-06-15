@@ -1,0 +1,11 @@
+#!/bin/sh
+
+status=$(swaymsg -t get_inputs | jq --raw-output '.[] | select(.identifier=="2:8:AlpsPS/2_ALPS_GlidePoint") | .libinput.tap_drag')
+
+if [ "$status" = "disabled" ]; then
+  swaymsg input "2:8:AlpsPS/2_ALPS_GlidePoint" drag enabled
+  notify-send -u low "Touchpad" "Drag enabled"
+else
+  swaymsg input "2:8:AlpsPS/2_ALPS_GlidePoint" drag disabled
+  notify-send -u low "Touchpad" "Drag disabled"
+fi
