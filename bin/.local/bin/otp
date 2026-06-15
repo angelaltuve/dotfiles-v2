@@ -22,7 +22,8 @@ command -v zbarimg >/dev/null 2>&1 || { notify-send "zbarimg not installed" "Ins
 command -v grim >/dev/null 2>&1 || { notify-send "grim not installed" "Install: pacman -S grim slurp"; exit 1; }
 pass otp --help >/dev/null 2>&1 || { notify-send "pass-otp not installed" "Install: yay -S pass-otp oath-toolkit"; exit 1; }
 
-choice=$(printf "%s\n" "add" "$(ls "$dir"/*-otp.gpg 2>/dev/null | sed "s/.*\///;s/-otp.gpg//")" | ${DMENU:-bemenu} -p "OTP") || exit 0
+otp_list=$(find "$dir" -maxdepth 1 -name "*-otp.gpg" -printf "%f\n" | sed "s/-otp.gpg//")
+choice=$(printf "add\n%s" "$otp_list" | ${DMENU:-bemenu} -p "OTP") || exit 0
 
 case $choice in
   add)
