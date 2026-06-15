@@ -13,6 +13,7 @@ status-show-menu-path false
 pager-centering true
 list-entry-date-format "%b %d %R"
 menu-item-sorting unread-desc
+menu-feed-sorting unread-desc
 
 # browser
 open-in-browser-command browser "%l"
