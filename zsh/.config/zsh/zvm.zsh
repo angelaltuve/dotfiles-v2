@@ -1,0 +1,43 @@
+#!/usr/bin/env zsh
+
+function zvm_config() {
+  ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+  ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+  ZVM_VI_EDITOR=nvim
+
+  ZVM_OPEN_URL_CMD='librewolf'
+  ZVM_OPEN_FILE_CMD='nvim'
+  ZVM_OPEN_CMD='xdg-open'
+
+  ZVM_SYSTEM_CLIPBOARD_ENABLED=true
+  ZVM_CLIPBOARD_COPY_CMD='wl-copy'
+  ZVM_CLIPBOARD_PASTE_CMD='wl-paste -n'
+
+  ZVM_VI_SURROUND_BINDKEY=classic
+
+  ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BEAM
+  ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
+  ZVM_VISUAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
+  ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_UNDERLINE
+
+  ZVM_VI_HIGHLIGHT_FOREGROUND=#cdd6f4
+  ZVM_VI_HIGHLIGHT_BACKGROUND=#585b70
+  ZVM_VI_HIGHLIGHT_EXTRASTYLE=bold,underline
+}
+
+function zvm_after_init() {
+  true
+}
+
+function zvm_after_select_vi_mode() {
+  case $ZVM_MODE in
+    $ZVM_MODE_NORMAL) ;;
+    $ZVM_MODE_INSERT) ;;
+    $ZVM_MODE_VISUAL|$ZVM_MODE_VISUAL_LINE) ;;
+    $ZVM_MODE_REPLACE) ;;
+  esac
+}
+
+function zvm_after_lazy_keybindings() {
+  true
+}

@@ -1,57 +1,35 @@
-#!/usr/bin/env zsh
-# ==============================================================================
-# Shell Aliases
-# ==============================================================================
-
-# === Editor ===
+# editor
 alias vim='nvim'
 alias vimdiff='nvim -d'
 
-# === Sudo wrappers ===
-alias mount='sudo mount'
-alias umount='sudo umount'
-alias sv='sudo dinitctl'
-alias pacman='sudo pacman'
-alias updatedb='sudo updatedb'
-alias su='sudo su'
-alias shutdown='sudo shutdown'
-alias poweroff='sudo poweroff'
-alias reboot='sudo reboot'
-alias eject='sudo eject'
+[ -f "$MBSYNCRC" ] && alias mbsync='mbsync -c $MBSYNCRC'
 
-# === Navigation ===
+for command in mount umount sv pacman updatedb su shutdown poweroff reboot; do
+  alias $command="sudo $command"
+done; unset command
+
+# nav
 alias ..='cd ..'
 alias ...='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
-
-# === Zoxide (smart cd) ===
 alias cd='_zoxide_cd'
-
-# === Open with xdg-open (background) ===
 alias open='_xdg_open_bg'
-
-# === Jitsi link generator ===
 alias jitsi-link='_jitsi_link'
 
-# === FZF ===
+# fzf
 if [[ "$TERM" == "xterm-kitty" ]]; then
   alias ff="fzf --preview 'case \$(file --mime-type -b {}) in image/*) kitty icat --clear --transfer-mode=memory --stdin=no --place=\${FZF_PREVIEW_COLUMNS}x\${FZF_PREVIEW_LINES}@0x0 {} ;; *) bat --style=numbers --color=always {} ;; esac'"
 else
   alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 fi
-
 alias eff='$EDITOR "$(ff)"'
 alias preview='fzf --preview="bat {} --color=always"'
-
-# === SCP with fzf ===
 alias sff='_scp_fzf'
-
-# === Edit script in ~/.local/bin ===
 alias se='_edit_script'
 
-# === File Operations ===
+# file
 alias cp='cp -iv --reflink=auto'
 alias mv='mv -iv'
 alias rm='rm -Iv'
@@ -60,24 +38,21 @@ alias rmdir='rmdir -v'
 alias mkdir='mkdir -v'
 alias shred='shred -zf'
 alias dd='dd status=progress'
-
 alias df='df -h'
 alias free='free -h'
 alias chmod='chmod -c'
 alias chown='chown -c'
-
 alias lsb='lsblk -o NAME,FSTYPE,SIZE,FSUSED,MOUNTPOINTS,UUID'
 alias lsbc='lsblk | bat -l conf -p'
 alias freec='free -h | bat -l cpuinfo -p'
 alias sensors='sensors | bat -l cpuinfo -p'
-
 alias rcp='rsync -v --progress'
 alias rmv='rsync -v --progress --remove-source-files'
 alias compress='tar -czf'
 alias untar='tar -xvzf'
 alias stow='stow -v'
 
-# === Process ===
+# proc
 alias psa='ps auxf'
 alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias psmem='ps auxf | sort -nr -k 4'
@@ -85,7 +60,7 @@ alias psmem10='psmem | head -10'
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='pscpu | head -10'
 
-# === Network ===
+# net
 alias ip='ip -color=auto'
 alias wget="wget -c --user-agent 'noleak'"
 alias ping='ping -c 5'
@@ -95,7 +70,7 @@ alias findme='curl https://am.i.mullvad.net/json'
 alias tb='nc termbin.com 9999'
 alias tbc='tb | wl-copy'
 
-# === Media ===
+# media
 alias ffmpeg='ffmpeg -hide_banner'
 alias ffprobe='ffprobe -hide_banner'
 alias yt='yt-dlp --embed-metadata -i'
@@ -108,11 +83,11 @@ alias yta-aac='yt -x --audio-format aac'
 alias yta-best='yt -x --audio-format best'
 alias convi='_convert_video'
 
-# === Display ===
+# display
 alias diff='diff -Nuar --color=auto'
 alias grep='grep --color=auto'
 
-# === System ===
+# sys
 alias dl='sudo dmsetup ls'
 alias cupsd='sudo cupsd -f'
 alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
@@ -120,15 +95,13 @@ alias update-fc='sudo fc-cache -fv'
 alias update-all='~/.local/bin/update-all'
 alias gpgrestart='gpgconf --kill gpg-agent && gpg-agent --daemon'
 alias reload='source ~/.zshenv'
-
 alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort -h | tail -200 | nl"
 alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort -h | tail -3000 | nl"
 
-# === Jupyter ===
+# jupyter
 alias jda='cd /home/angel/Documents/jupyter_notebooks/EDA_Heart && poetry run jupyter-lab'
 alias jda-colab='cd /home/angel/Documents/jupyter_notebooks/EDA_Heart && poetry run jupyter-lab --NotebookApp.allow_origin="https://colab.research.google.com" --NotebookApp.allow_credentials=True --port=8888 --NotebookApp.port_retries=0 --no-browser'
 
-# === Tools & Apps ===
 alias oc='opencode'
 alias lg='lazygit'
 alias bt='btop'
@@ -139,12 +112,10 @@ alias tml='tmux list-sessions'
 alias tl='timew summary'
 alias calc='qalc'
 alias du='dust'
-
-# === Misc ===
 alias trash='trash-put'
 alias tt='ttyper'
 
-# === Suffix / Global ===
+# suffix / global
 alias -s json=jq
 alias -s md=bat
 alias -s txt=bat

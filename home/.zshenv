@@ -5,6 +5,7 @@ path+=(
   "$HOME/.local/share/npm/bin"
   "$HOME/Applications"
   "$HOME/.local/share/cargo/bin"
+  "$HOME/.local/share/go/bin"
   "$HOME/.local/bin"
 )
 
@@ -37,6 +38,7 @@ export ANSIBLE_CONFIG="$XDG_CONFIG_HOME/ansible/ansible.cfg"
 export FFMPEG_DATADIR="$XDG_CONFIG_HOME/ffmpeg"
 export PARALLEL_HOME="$XDG_CONFIG_HOME/parallel"
 export ANDROID_SDK_HOME="$XDG_CONFIG_HOME/android"
+export W3M_DIR="$XDG_CONFIG_HOME/w3m"
 export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
 export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 export JUPYTER_DATA_DIR="$XDG_DATA_HOME/jupyter"
@@ -45,6 +47,9 @@ export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export GOPATH="$XDG_DATA_HOME/go"
+export KHARD_CONFIG="$XDG_CONFIG_HOME/khard/khard.conf"
+
+export DMENU="bemenu"
 export NVM_DIR="$XDG_DATA_HOME/nvm"
 export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 export ELECTRUMDIR="$XDG_DATA_HOME/electrum"
@@ -59,6 +64,7 @@ export XCOMPOSEFILE="$XDG_CONFIG_HOME/XCompose"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export OLLAMA_MODELS=$XDG_DATA_HOME/ollama/models
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export SQLITE_HISTORY=$XDG_STATE_HOME/sqlite_history
 
 # Ensure the XDG state directory for zsh history exists
 mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}/zsh"
@@ -66,15 +72,9 @@ mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}/zsh"
 export LESSHISTFILE="$XDG_CACHE_HOME/less_history"
 export TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
 
-export NOTMUCH_PROFILE="01"
-
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
 export FZF_DEFAULT_OPTS="--style minimal --color 16 --layout=reverse --height 30%"
 export FZF_CTRL_R_OPTS="--style minimal --color 16 --info inline --no-sort"
-
-# --- SSH (KeePassXC) ---
-export GPG_TTY=$(tty)
-export SSH_AUTH_SOCK="/tmp/ssh-agent.sock"
 
 # --- Qt ---
 export QT_QPA_PLATFORMTHEME="gtk3"
