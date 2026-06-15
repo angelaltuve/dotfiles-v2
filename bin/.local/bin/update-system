@@ -2,7 +2,7 @@
 
 DESC="update-$(date +%Y%m%d-%H%M)"
 
-if ! launch-tui yay -Syu; then
+if ! launch-floating-terminal-with-presentation yay -Syu; then
     exit 1
 fi
 
