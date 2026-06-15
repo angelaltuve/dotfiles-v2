@@ -383,7 +383,7 @@ bindsym XF86AudioPrev         exec playerctl previous
 # bindsym $mod+Control+bracketright mpc seek +10
 
 # Atajos
-bindsym $mod+F2 exec kitty --title shortcuts -e shortcuts
+bindsym $mod+F2 exec sway-help
 
 ### Status Bar
 bar {
