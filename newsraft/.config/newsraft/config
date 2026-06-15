@@ -12,9 +12,10 @@ database-clean-on-startup true
 status-show-menu-path false
 pager-centering true
 list-entry-date-format "%b %d %R"
+menu-item-sorting unread-desc
 
 # browser
-open-in-browser-command linkhandler "%l"
+open-in-browser-command browser "%l"
 copy-to-clipboard-command auto
 
 # catppuccin mocha
@@ -36,3 +37,4 @@ color-list-item-important         bold    color183 default
 # mpv for media
 bind  m exec setsid --fork mpv --force-window=immediate "%l" > /dev/null 2>&1
 bind  S exec ~/.local/bin/bookmark.sh "%l"
+bind  r exec kitty @ launch --type=window --cwd "$(pwd)" reader -i kitty "%l"
