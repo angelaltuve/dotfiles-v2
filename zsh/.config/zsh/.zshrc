@@ -36,7 +36,6 @@ zinit snippet OMZP::fancy-ctrl-z
 zinit snippet OMZP::fzf
 zinit snippet OMZP::zoxide
 zinit snippet OMZP::mise
-zinit light jeffreytse/zsh-vi-mode
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
@@ -53,9 +52,6 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 HISTSIZE=5000
-[ -d "$XDG_STATE_HOME"/zsh ] || mkdir -p "$XDG_STATE_HOME"/zsh
-HISTFILE="$XDG_STATE_HOME"/zsh/history
-[ -d "$XDG_CACHE_HOME"/zsh ] || mkdir -p "$XDG_CACHE_HOME"/zsh
 SAVEHIST="$HISTSIZE"
 HISTDUP=erase
 setopt sharehistory
