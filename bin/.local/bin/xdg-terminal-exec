@@ -3,7 +3,7 @@
 # Simple xdg-terminal-exec implementation for dinit systems
 # Reads ~/.config/xdg-terminals.list or uses kitty as default
 
-config_file="${XDG_CONFIG_HOME:-$HOME/.config}/xdg-terminals.list"
+config_file="$XDG_CONFIG_HOME/xdg-terminals.list"
 terminal=""
 
 if [[ -f "$config_file" ]]; then
