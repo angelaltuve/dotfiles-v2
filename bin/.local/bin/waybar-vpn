@@ -3,8 +3,8 @@
 cmd="${1:-toggle}"
 
 down_all() {
-  pkexec /usr/bin/wg show interfaces 2>/dev/null | while read -r iface; do
-    [ -n "$iface" ] && pkexec /usr/bin/wg-quick down "$iface"
+  sudo /usr/bin/wg show 2>/dev/null | awk '/^interface:/ {print $2}' | while read -r iface; do
+    [ -n "$iface" ] && sudo /usr/bin/wg-quick down "$iface"
   done
 }
 
@@ -15,11 +15,11 @@ case "$cmd" in
     else
       configs=$(/usr/bin/sudo ls -1 /etc/wireguard/*.conf 2>/dev/null | xargs -n 1 basename | sed 's/\.conf//')
       [ -z "$configs" ] && exit 1
-      selected=$(printf "%s" "$configs" | rofi -dmenu -p "WireGuard")
+      selected=$(printf "%s" "$configs" | ${DMENU:-bemenu} -p "WireGuard")
       [ -z "$selected" ] && exit 0
       down_all
       sleep 1
-      pkexec /usr/bin/wg-quick up "$selected"
+      sudo /usr/bin/wg-quick up "$selected"
     fi
     pkill -SIGRTMIN+11 waybar
     ;;
