@@ -60,7 +60,7 @@ vim.opt.clipboard:append("unnamedplus") -- use system clipboard
 vim.opt.modifiable = true -- allow buffer modifications
 
 vim.opt.guicursor =
-	"n-v-c:block,i-ci-ve:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175" -- cursor blinking and settings
+	"n-v-c:block,i-ci-ve:beam,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175" -- cursor blinking and settings
 
 -- Folding: requires treesitter available at runtime; safe fallback if not
 vim.opt.foldmethod = "expr" -- use expression for folding
@@ -265,6 +265,8 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
 vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without yanking" })
 vim.keymap.set({ "n", "v" }, "<leader>x", '"_d', { desc = "Delete without yanking" })
 
+vim.keymap.set("n", "<leader>s", ":%s//g<Left><Left>", { desc = "Substitute in buffer" })
+
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 
@@ -307,6 +309,19 @@ end, { desc = "Copy full file path" })
 vim.keymap.set("n", "<leader>dt", function()
 	vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle diagnostics" })
+
+-- Kitty integration: open current file in a new Kitty window
+vim.keymap.set("n", "<leader>kk", function()
+	local file = vim.fn.expand("%:p")
+	if file ~= "" then
+		vim.fn.system({
+			"kitty", "@", "launch",
+			"--cwd", vim.fn.getcwd(),
+			"--type", "window",
+			"nvim", file,
+		})
+	end
+end, { desc = "Open file in new Kitty window" })
 
 -- ============================================================================
 -- AUTOCMDS
@@ -410,6 +425,15 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- disable automatic comment continuation on new lines
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup,
+	pattern = "*",
+	callback = function()
+		vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+	end,
+})
+
 -- Download missing spell files on startup (silent)
 vim.api.nvim_create_autocmd("UIEnter", {
 	group = augroup,
@@ -435,6 +459,25 @@ vim.api.nvim_create_autocmd("VimLeave", {
 		vim.cmd("silent !latexmk -c " .. vim.fn.expand("%"))
 	end,
 	desc = "Clean tex build files on exit",
+})
+
+-- Neomutt: markdown syntax + RFC 3676 signature delimiter
+vim.api.nvim_create_autocmd("BufRead", {
+	group = augroup,
+	pattern = "/tmp/neomutt*",
+	callback = function()
+		vim.bo.filetype = "markdown"
+	end,
+	desc = "Set markdown syntax for neomutt compose",
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = augroup,
+	pattern = "*neomutt*",
+	callback = function()
+		vim.cmd([[%s/^--\ze\n/-- /e]])
+	end,
+	desc = "Ensure dash-dash-space signature delimiter in neomutt",
 })
 
 -- ============================================================================
@@ -475,6 +518,7 @@ vim.pack.add({
 	"https://github.com/nvim-neotest/nvim-nio",
 	{ src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
 	"https://github.com/kdheepak/lazygit.nvim",
+	"https://github.com/3rd/image.nvim",
 })
 
 -- ============================================================================
@@ -591,6 +635,25 @@ end
 setup_obsidian()
 
 require("render-markdown").setup({})
+
+require("image").setup({
+	integrations = {
+		markdown = {
+			enabled = true,
+			clear_in_insert_mode = false,
+			download_remote_images = true,
+			only_render_image_at_cursor = true,
+		},
+		neorg = { enabled = false },
+		html = { enabled = false },
+		css = { enabled = false },
+	},
+	max_width = nil,
+	max_height = nil,
+	max_width_window_percentage = 50,
+	max_height_window_percentage = 50,
+	kitty_method = "normal",
+})
 
 require("mtoc").setup({
 	auto_update = true,
