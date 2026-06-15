@@ -1,0 +1,5 @@
+layout tall
+cd ~
+launch --title "obsidian"
+focus
+focus_os_window
