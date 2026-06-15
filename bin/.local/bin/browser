@@ -17,6 +17,23 @@
 # Categories=Network;WebBrowser
 # MimeType=x-scheme-handler/unknown;x-scheme-handler/about;x-scheme-handler/https;x-scheme-handler/http;text/html;
 
+
+[ "${BEMENU_OPTS}" = "" ] \
+&& export BEMENU_OPTS="-n -c -s -i \
+  -W 0.3 -H 26 -B 2 -l 10 \
+  -p '▲' -P '' --ch 16 --scrollbar always \
+  --fn 'JetBrainsMono Nerd Font 11' \
+  --nb '#1e1e2e' --nf '#cdd6f4' \
+  --ab '#1e1e2e' --af '#cdd6f4' \
+  --hb '#b4befe' --hf '#1e1e2e' \
+  --sb '#b4befe' --sf '#1e1e2e' \
+  --fb '#1e1e2e' --ff '#cdd6f4' \
+  --fbb '#1e1e2e' --fbf '#cdd6f4' \
+  --tb '#1e1e2e' --tf '#cdd6f4' \
+  --scb '#1e1e2e' --scf '#cdd6f4' \
+  --bdr '#b4befe'"
+
+
 unset GDK_BACKEND
 
 browsers="copy
@@ -24,24 +41,20 @@ chromium
 librewolf"
 
 url="$1"
+host=$(url-parser --url host "$url" 2>/dev/null || echo "$url")
 
-host=$(url-parser --url host "$url")
-
-selected_browser="chromium"
-
-if [ "$(expr "$host" : '^.*\.onion$')" -gt 0 ]
-then
-  selected_browser="tor-browser"
+if echo "$host" | grep -qi '\.onion$'; then
+  selected="tor-browser"
 else
-  selected_browser=$(printf "%s" "$browsers" | rofi -dmenu -p "browser")
+  selected=$(printf "copy\nchromium\nlibrewolf" | bemenu -p "browser")
 fi
 
-case $selected_browser in
+case $selected in
   "copy")
     exec wl-copy "$url"
     ;;
   "firefox")
-    exec /usr/local/bin/ff "$url"
+    exec /usr/local/bin/firefox "$url"
     ;;
   "librewolf")
     exec /usr/bin/librewolf "$url"
@@ -50,7 +63,7 @@ case $selected_browser in
     exec chromium --force-dark-mode --enable-features=WebUIDarkMode "$url"
     ;;
   "tor-browser")
-    exec /usr/local/bin/tb "$url"
+    exec /usr/local/bin/tor-browser "$url"
     ;;
   *)
     exit 0
