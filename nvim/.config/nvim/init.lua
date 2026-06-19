@@ -1,4 +1,6 @@
 vim.opt.termguicolors = true
+
+vim.cmd("silent !stty -ixon") -- allow <C-s> to reach Neovim
 vim.cmd.colorscheme("catppuccin")
 
 -- ============================================================================
@@ -315,10 +317,15 @@ vim.keymap.set("n", "<leader>kk", function()
 	local file = vim.fn.expand("%:p")
 	if file ~= "" then
 		vim.fn.system({
-			"kitty", "@", "launch",
-			"--cwd", vim.fn.getcwd(),
-			"--type", "window",
-			"nvim", file,
+			"kitty",
+			"@",
+			"launch",
+			"--cwd",
+			vim.fn.getcwd(),
+			"--type",
+			"window",
+			"nvim",
+			file,
 		})
 	end
 end, { desc = "Open file in new Kitty window" })
@@ -351,6 +358,9 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		"*.cpp",
 		"*.h",
 		"*.hpp",
+		"*.toml",
+		"*.yaml",
+		"*.yml",
 	},
 	callback = function(args)
 		-- avoid formatting non-file buffers (helps prevent weird write prompts)
@@ -451,6 +461,18 @@ vim.api.nvim_create_autocmd("UIEnter", {
 	end,
 })
 
+-- Auto create dir when saving a file, in case some intermediate directory does not exist
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+	group = vim.api.nvim_create_augroup("auto_create_dir", { clear = true }),
+	callback = function(event)
+		if event.match:match("^%w%w+:[\\/][\\/]") then
+			return
+		end
+		local file = vim.uv.fs_realpath(event.match) or event.match
+		vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+	end,
+})
+
 -- Clean tex build files on VimLeave
 vim.api.nvim_create_autocmd("VimLeave", {
 	group = augroup,
@@ -542,10 +564,12 @@ local setup_treesitter = function()
 		"lua",
 		"markdown",
 		"python",
+		"toml",
 		"typescript",
 		"vue",
 		"svelte",
 		"bash",
+		"yaml",
 	}
 
 	local config = require("nvim-treesitter.config")
@@ -609,7 +633,7 @@ local function setup_obsidian()
 			folder = "2_assets",
 		},
 		ui = {
-			enable = true,
+			enable = false,
 			update_debounce = 300,
 		},
 	})
@@ -710,6 +734,9 @@ end, { desc = "FZF Manpages" })
 
 require("mini.ai").setup({})
 require("mini.comment").setup({})
+
+vim.keymap.set("n", "<leader>/", "gcc", { desc = "Toggle comment", remap = true })
+vim.keymap.set("x", "<leader>/", "gc", { desc = "Toggle comment", remap = true })
 require("mini.surround").setup({})
 require("mini.cursorword").setup({})
 require("mini.indentscope").setup({})
@@ -730,9 +757,15 @@ starter.setup({
 		sec("Live Grep", "lua require('fzf-lua').live_grep()", "Fzf-Lua"),
 		sec("Today's Note", "Obsidian today", "Obsidian"),
 		sec("New Note", "Obsidian new", "Obsidian"),
+		sec("Open Note", "Obsidian quick_switch", "Obsidian"),
 		sec("Lazygit", "lua vim.fn.jobstart('foot -e lazygit', {detach = true})", "Tools"),
 		sec("NvimTree", "lua require('nvim-tree.api').tree.toggle()", "Tools"),
-		sec("Terminal", "lua vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<leader>t', true, false, true), 'n', false)", "Tools"),
+		sec(
+			"Terminal",
+			"lua vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<leader>t', true, false, true), 'n', false)",
+			"Tools"
+		),
+		sec("New File", "enew", "File"),
 		sec("Quit", "qa", "Exit"),
 	},
 	header = "Neovim",
@@ -760,7 +793,19 @@ local ok_mason_tools, mason_tool_installer = pcall(require, "mason-tool-installe
 
 if ok_mason_lsp then
 	mason_lspconfig.setup({
-		ensure_installed = { "lua_ls", "pyright", "bashls", "ts_ls", "gopls", "clangd", "marksman", "efm", "sqlls" },
+		ensure_installed = {
+			"lua_ls",
+			"pyright",
+			"bashls",
+			"ts_ls",
+			"gopls",
+			"clangd",
+			"marksman",
+			"postgres_lsp",
+			"taplo",
+			"yamlls",
+			"efm",
+		},
 		automatic_installation = true,
 	})
 end
@@ -781,6 +826,15 @@ if ok_mason_tools then
 			"goimports",
 			"golangci-lint",
 			"autopep8",
+			"luacheck",
+			"prettierd",
+			"fixjson",
+			"cpplint",
+			"revive",
+			"rust_analyzer",
+			"sql-formatter",
+			"yq",
+			"taplo",
 		},
 		auto_update = false,
 		run_on_start = true,
@@ -942,7 +996,15 @@ require("blink.cmp").setup({
 			end,
 		},
 	},
-	sources = { default = { "lsp", "path", "buffer", "snippets", "obsidian" } },
+	sources = {
+		default = { "lsp", "path", "buffer", "snippets", "obsidian" },
+		per_filetype = {
+			sql = { "dadbod", "lsp", "snippets", "buffer" },
+		},
+		providers = {
+			dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+		},
+	},
 	snippets = {
 		expand = function(snippet)
 			require("luasnip").lsp_expand(snippet)
@@ -973,18 +1035,15 @@ vim.lsp.config("bashls", {})
 vim.lsp.config("ts_ls", {})
 vim.lsp.config("gopls", {})
 vim.lsp.config("clangd", {})
-vim.lsp.config("marksman", {})
-vim.lsp.config("sqlls", {
-	settings = {
-		sqls = {
-			-- auto-indent on newline
-			format = {
-				upper = false,
-				linesBetweenQueries = 2,
-			},
-		},
-	},
+vim.lsp.config("postgres_lsp", {
+	cmd = { "postgres-language-server", "lsp-proxy" },
+	filetypes = { "sql" },
+	root_markers = { ".git" },
+	workspace_required = false,
 })
+
+vim.lsp.config("taplo", {})
+vim.lsp.config("yamlls", {})
 
 vim.g.rustaceanvim = {
 	server = {
@@ -1013,6 +1072,14 @@ do
 	local go_revive = require("efmls-configs.linters.go_revive")
 	local gofumpt = require("efmls-configs.formatters.gofumpt")
 
+	local sql_formatter = {
+		formatCommand = "sql-formatter --language postgresql",
+		formatStdin = true,
+	}
+
+	local taplo = require("efmls-configs.formatters.taplo")
+	local yq = require("efmls-configs.formatters.yq")
+
 	vim.lsp.config("efm", {
 		filetypes = {
 			"c",
@@ -1028,10 +1095,13 @@ do
 			"markdown",
 			"python",
 			"sh",
+			"sql",
+			"toml",
 			"typescript",
 			"typescriptreact",
 			"vue",
 			"svelte",
+			"yaml",
 		},
 		init_options = { documentFormatting = true },
 		settings = {
@@ -1049,6 +1119,9 @@ do
 				markdown = { prettier_d },
 				python = { flake8, black },
 				sh = { shellcheck, shfmt },
+				sql = { sql_formatter },
+				toml = { taplo },
+				yaml = { yq },
 				typescript = { eslint_d, prettier_d },
 				typescriptreact = { eslint_d, prettier_d },
 				vue = { eslint_d, prettier_d },
@@ -1066,8 +1139,9 @@ vim.lsp.enable({
 	"gopls",
 	"clangd",
 	"marksman",
+	"taplo",
+	"yamlls",
 	"efm",
-	"sqlls",
 })
 
 require("venv-selector").setup({
@@ -1165,9 +1239,64 @@ end, { desc = "Open DAP REPL" })
 vim.g.dadbod_local_connectors = {}
 vim.g.dadbod_enable_tabular_mode = false
 
-vim.keymap.set("n", "<leader>ub", "<cmd>DBUI<CR>", { desc = "DB UI toggle" })
-vim.keymap.set("n", "<leader>uq", "<cmd>DBUIQuery<CR>", { desc = "DB UI query" })
-vim.keymap.set("n", "<leader>ur", "<cmd>DBUIQuickQuery<CR>", { desc = "DB quick query" })
+vim.keymap.set("n", "<leader>ub", "<cmd>DBUIToggle<CR>", { desc = "DB UI toggle" })
+vim.keymap.set("n", "<leader>uf", "<cmd>DBUIFindBuffer<CR>", { desc = "Assign buffer to DB" })
+vim.keymap.set("n", "<Esc>", "<cmd>noh<CR>", { desc = "Clear search highlights" })
+vim.keymap.set("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
+vim.keymap.set("n", "<C-c>", "<cmd>%y+<CR>", { desc = "Copy whole file" })
+
+vim.keymap.set("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "Toggle line number" })
+vim.keymap.set("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "Toggle relative number" })
+
+-- close some filetypes with q
+vim.api.nvim_create_autocmd("FileType", {
+	group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
+	pattern = {
+		"checkhealth",
+		"dap-float",
+		"dbout",
+		"dbui",
+		"help",
+		"lspinfo",
+		"mason",
+		"notify",
+		"qf",
+		"startuptime",
+		"tsplayground",
+	},
+	callback = function(event)
+		vim.bo[event.buf].buflisted = false
+		vim.schedule(function()
+			vim.keymap.set("n", "q", function()
+				vim.cmd("close")
+				pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
+			end, {
+				buffer = event.buf,
+				silent = true,
+				desc = "Quit buffer",
+			})
+		end)
+	end,
+})
+
+
+-- Ensure postgres_lsp attaches only to dadbod query buffers (buftype=nofile)
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "sql",
+	group = augroup,
+	callback = function()
+		if vim.bo.buftype ~= "nofile" then
+			return
+		end
+		local clients = vim.lsp.get_clients({ name = "postgres_lsp", bufnr = 0 })
+		if #clients == 0 then
+			local ok, config = pcall(vim.lsp.config, "postgres_lsp")
+			if ok then
+				vim.lsp.start("postgres_lsp")
+			end
+		end
+	end,
+})
 
 vim.keymap.set("n", "<leader>vs", "<cmd>VenvSelect<cr>", { desc = "Select Python venv" })
 

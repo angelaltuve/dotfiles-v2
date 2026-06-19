@@ -12,7 +12,7 @@ icon=$(weather-icon 2>/dev/null || echo "")
 status=$(weather-status 2>/dev/null || echo "Weather")
 
 jq -cn --arg icon "$icon" --arg temp "$temperature" --arg wind "$wind" --arg cond "$condition" --arg status "$status" '{
-  text: ($icon + " " + $temp),
+  text: ($icon + "   " + $temp),
   alt: $cond,
   tooltip: $status,
   class: "weather"

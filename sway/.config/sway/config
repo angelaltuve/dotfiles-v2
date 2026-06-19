@@ -8,12 +8,12 @@ set $right l
 
 ## apps
 set $term kitty
-set $menu rofi
+set $menu rofi -show drun
 set $dmenu bemenu
 set $web librewolf
 set $web2 chromium
-set $file_browser kitty -e yazi
-set $rmpc kitty -e rmpc
+set $file_browser launch-floating-terminal-with-presentation yazi
+set $rmpc launch-floating-terminal-with-presentation rmpc
 
 # Colors
 set $accent #afa193
@@ -89,48 +89,53 @@ focus_follows_mouse no
 focus_on_window_activation smart
 
 ### Window Rules
-for_window [app_id = "keepassxc"] floating enable, border pixel 1, resize set width 90 ppt height 90 ppt, move position center
-for_window [class = "KeePassXC"] floating enable, border pixel 1, resize set width 90 ppt height 90 ppt, move position center
-for_window [app_id = "org.telegram.desktop"] floating enable, resize set width 70 ppt height 80 ppt, move position center
-for_window [app_id = "localsend"] floating enable, resize set width 70 ppt height 80 ppt, move position center
-for_window [app_id = "lxappearance"] floating enable, resize set width 50 ppt height 60 ppt, move position center
-for_window [app_id = "pavucontrol"] floating enable, resize set width 40 ppt height 50 ppt, move position center
-for_window [app_id = "pcmanfm"] floating enable, resize set width 80 ppt height 80 ppt, move position center
-for_window [app_id = "polkit-gnome-authentication-agent-1"] floating enable, resize set width 45 ppt height 25 ppt, move position center
-for_window [app_id = "terminal"] floating enable, resize set width 70 ppt height 75 ppt, move position center
+for_window [app_id = "keepassxc"] floating enable, border pixel 1, resize set width 90 ppt height 90 ppt
+for_window [class = "KeePassXC"] floating enable, border pixel 1, resize set width 90 ppt height 90 ppt
+for_window [app_id = "org.telegram.desktop"] floating enable, resize set width 70 ppt height 80 ppt
+for_window [app_id = "localsend"] floating enable, resize set width 70 ppt height 80 ppt
+for_window [app_id = "lxappearance"] floating enable, resize set width 50 ppt height 60 ppt
+for_window [app_id = "pavucontrol"] floating enable, resize set width 40 ppt height 50 ppt
+for_window [app_id = "pcmanfm"] floating enable, resize set width 80 ppt height 80 ppt
+for_window [app_id = "polkit-gnome-authentication-agent-1"] floating enable, resize set width 45 ppt height 25 ppt
+# 'terminal' app_id is set by launch-floating-terminal-with-presentation
+for_window [app_id = "terminal"] floating enable, resize set width 70 ppt height 75 ppt
 
-# Browser and file dialog specific rules
-for_window [window_type="dialog"] floating enable
-for_window [window_role="dialog"] floating enable
-for_window [window_role="pop-up"] floating enable
-for_window [window_role="bubble"] floating enable
-for_window [window_role="task_dialog"] floating enable
-for_window [window_role="Preferences"] floating enable
-for_window [window_type="menu"] floating enable
-for_window [window_role="About"] floating enable
+# --- CLI apps launched via Sway shortcuts ---
+# Handled by the 'terminal' rule above via launch-floating-terminal-with-presentation
+
+# Native Wayland dialogs and menus
+for_window [window_type = "dialog"] floating enable
+for_window [window_type = "menu"] floating enable
+# XWayland dialogs (window_role only applies to X11 apps)
+for_window [window_role = "dialog"] floating enable
+for_window [window_role = "pop-up"] floating enable
+for_window [window_role = "bubble"] floating enable
+for_window [window_role = "task_dialog"] floating enable
+for_window [window_role = "Preferences"] floating enable
+for_window [window_role = "About"] floating enable
+
 # Native Chromium dialogs (Wayland)
-for_window [app_id="chromium" title="^(Save As|Save File|Open File|Print|About|Bookmark|Import|Clear browsing data|Extensions|Settings|History)$"] floating enable, resize set width 60 ppt height 70 ppt, move position center
-for_window [app_id="chromium-browser-chromium" title="^(Save As|Save File|Open File|Print|About|Bookmark|Import|Clear browsing data|Extensions|Settings|History)$"] floating enable, resize set width 60 ppt height 70 ppt, move position center
+for_window [app_id="chromium" title="^(Save As|Save File|Open File|Print|About|Bookmark|Import|Clear browsing data|Extensions|Settings|History)$"] floating enable, resize set width 60 ppt height 70 ppt
 for_window [app_id="chromium" title="Picture in picture"] floating enable, sticky enable, resize set width 350 px height 197 px, move position 960 px 500 px
-for_window [app_id="chromium-browser-chromium" title="Picture in picture"] floating enable, sticky enable, resize set width 350 px height 197 px, move position 960 px 500 px
 
 # LibreWolf about/preferences
-for_window [app_id="librewolf" title="^About "] floating enable, resize set width 60 ppt height 70 ppt, move position center
-for_window [app_id="librewolf" title="^Preferences"] floating enable, resize set width 70 ppt height 80 ppt, move position center
-for_window [app_id="librewolf" title="^Add-ons"] floating enable, resize set width 60 ppt height 80 ppt, move position center
+for_window [app_id="librewolf" title="^About "] floating enable, resize set width 60 ppt height 70 ppt
+for_window [app_id="librewolf" title="^Preferences"] floating enable, resize set width 70 ppt height 80 ppt
+for_window [app_id="librewolf" title="^Add-ons"] floating enable, resize set width 60 ppt height 80 ppt
 for_window [app_id="librewolf" title="^Downloads"] floating enable
-for_window [app_id="librewolf" title="^Page Info"] floating enable, resize set width 50 ppt height 60 ppt, move position center
+for_window [app_id="librewolf" title="^Page Info"] floating enable, resize set width 50 ppt height 60 ppt
 for_window [app_id="librewolf" title="^Save Link"] floating enable
-for_window [app_id="librewolf" title="^Open File"] floating enable, resize set width 60 ppt height 70 ppt, move position center
-for_window [app_id="librewolf" title="^Save File"] floating enable, resize set width 60 ppt height 70 ppt, move position center
+for_window [app_id="librewolf" title="^Open File"] floating enable, resize set width 60 ppt height 70 ppt
+for_window [app_id="librewolf" title="^Save File"] floating enable, resize set width 60 ppt height 70 ppt
 for_window [app_id="librewolf" title="^Clear Recent History"] floating enable
 
 # Chromium file chooser portal
-for_window [app_id="xdg-desktop-portal-gtk" title="^(Open File|Save As|Save File|Select Folder)$"] floating enable, resize set width 60 ppt height 70 ppt, move position center
+for_window [app_id="xdg-desktop-portal-gtk" title="^(Open File|Save As|Save File|Select Folder)$"] floating enable, resize set width 60 ppt height 70 ppt
 
 # Inhibit idle
-for_window [app_id="Chromium"] inhibit_idle fullscreen
-for_window [class="LibreWolf"] inhibit_idle fullscreen
+# Note: native Wayland uses lowercase app_id; class= is for XWayland
+for_window [app_id="chromium"] inhibit_idle fullscreen
+for_window [app_id="librewolf"] inhibit_idle fullscreen
 for_window [app_id="org.telegram.desktop"] inhibit_idle fullscreen
 for_window [app_id="mpv"] inhibit_idle fullscreen
 
@@ -142,15 +147,15 @@ no_focus [app_id="waybar"]
 focus_on_window_activation focus
 
 # launch apps
-exec swaymsg "workspace 2; exec librewolf"
-exec swaymsg "workspace 1; exec kitty"
+exec swaymsg "workspace 2; exec $web"
+exec swaymsg "workspace 1; exec $term"
 
 ### Idle configuration
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000' \
+         timeout 300 'swaylock' \
          timeout 420 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-         timeout 600 'swaymsg "output * power on"; sleep 1; loginctl suspend' \
-         before-sleep 'swaylock -f -c 000000'
+         timeout 600 'loginctl suspend' resume 'swaymsg "output * power on"' \
+         before-sleep 'swaylock'
 
 
 ### Startup applications
@@ -189,7 +194,7 @@ bindsym $mod+Shift+c reload
 
 # Exit sway
 # Calculator
-bindsym $mod+Shift+q exec kitty --class=qalc -e qalc
+bindsym $mod+Shift+q exec launch-floating-terminal-with-presentation qalc
 
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
@@ -199,6 +204,9 @@ bindsym $mod+Ctrl+q           exec swaylock
 
 # Recall last notifications
 bindsym $mod+asciitilde       exec makoctl restore
+
+# Toggle notification silencing
+bindsym $mod+Shift+n          exec toggle-notification-silencing
 
 # Pick color and copy to clipboard
 bindsym $mod+Shift+P          exec --no-startup-id hyprpicker -n -a
@@ -247,7 +255,7 @@ bindsym $mod+Control+p focus parent
 bindsym $mod+Control+w [app_id="librewolf"] focus
 
 # Focus Chromium
-bindsym $mod+Control+Shift+w [app_id="chromium-browser-chromium"] focus
+bindsym $mod+Control+Shift+w [app_id="chromium"] focus
 
 # Focus terminal 
 bindsym $mod+Control+g [app_id="kitty"] focus
@@ -288,9 +296,8 @@ bindsym $mod+bracketright workspace next
 # Layout & Scratchpad
 bindsym $mod+b splith
 bindsym $mod+v splitv
-# bindsym $mod+s layout stacking
+bindsym $mod+s layout stacking
 bindsym $mod+t layout tabbed
-bindsym $mod+s layout toggle split
 bindsym $mod+Tab focus mode_toggle
 bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
@@ -319,6 +326,10 @@ mode "resize" {
     bindsym Shift+$down move down 10px
     bindsym Shift+$up move up 10px
     bindsym Shift+$right move right 10px
+    bindsym Shift+Left move left 10px
+    bindsym Shift+Down move down 10px
+    bindsym Shift+Up move up 10px
+    bindsym Shift+Right move right 10px
 
     # Preset sizes
     bindsym 3 resize set width 320px height 340px
@@ -359,6 +370,7 @@ bindsym $mod+Shift+Print      exec --no-startup-id qr-extraction
 bindsym $mod+Alt+Print        exec --no-startup-id screenrecording
 
 bindsym $mod+m                exec $rmpc
+bindsym $mod+Alt+k            exec launch-floating-terminal-with-presentation ikhal
 
 bindsym $mod+Alt+g exec chromium --app="https://web.whatsapp.com/"
 bindsym $mod+Alt+x exec chromium --app="https://discordapp.com/"
@@ -382,7 +394,7 @@ bindsym XF86AudioPrev         exec playerctl previous
 # bindsym $mod+Control+bracketleft mpc seek -10
 # bindsym $mod+Control+bracketright mpc seek +10
 
-# Atajos
+# Shortcuts
 bindsym $mod+F2 exec sway-help
 
 ### Status Bar

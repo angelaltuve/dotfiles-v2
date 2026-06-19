@@ -14,7 +14,7 @@ while IFS= read -r c; do
   fi
 done <<< "$configs"
 
-choice=$(echo -e "$list" | ${DMENU:-bemenu} -p "WireGuard") || exit 0
+choice=$(echo -e "$list" | $DMENU -p "WireGuard") || exit 0
 
 name="${choice#*  }"
 

@@ -1,29 +1,26 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Example waybar configuration:
 #
 # "custom/zeit": {
 #   "format": "{}",
 #   "return-type": "json",
-#   "exec": "zeit-waybar-dmenu.sh",
-#   "on-click": "zeit-waybar-dmenu.sh click",
-#   "interval": 10
+#   "exec": "zeit-waybar-dmenu",
+#   "on-click": "zeit-waybar-dmenu click",
+#   "interval": 10,
+#   "signal": 12
 # },
 #
 
 ZEIT_BIN="$HOME/.local/share/go/bin/zeit"
+DMENU="${DMENU:-bemenu}"
 
 as_hms() {
   local nanoseconds=$1
-
   seconds=$((nanoseconds / 1000000000))
-
   hours=$((seconds / 3600))
-
   minutes=$(((seconds % 3600) / 60))
-
   seconds_r=$((seconds % 60))
-
   printf "%02d:%02d:%02d" "$hours" "$minutes" "$seconds_r"
 }
 
@@ -36,6 +33,7 @@ done
 if [[ "$1" == "click" ]]; then
   if [[ "$is_running" == "true" ]]; then
     $ZEIT_BIN end
+    pkill -SIGRTMIN+12 waybar
     exit 0
   fi
 
@@ -51,11 +49,12 @@ if [[ "$1" == "click" ]]; then
   fi
 
   $ZEIT_BIN start -p "$project" -t "$task"
+  pkill -SIGRTMIN+12 waybar
   exit 0
 fi
 
 if [[ "$is_running" == "true" ]]; then
-  timer_fmt=$(as_hms "$timer")
+  timer_fmt=$(as_hms "$((timer * 1000000000))")
   printf "{\"text\": \"%s<span color='#ffffff'>/</span>%s <span color='#ffffff'>%s</span>\", \"class\": \"custom-zeit\", \"alt\": \"%s\" }\n" "$project_sid" "$task_sid" "$timer_fmt" "$status"
 else
   total=$(as_hms $($ZEIT_BIN stat --format json today at 00:00 am | jq -r '."*"."*"."*"'))

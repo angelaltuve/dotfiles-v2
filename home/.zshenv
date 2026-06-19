@@ -58,7 +58,6 @@ export XCOMPOSEFILE="$XDG_CONFIG_HOME/XCompose"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export OLLAMA_MODELS=$XDG_DATA_HOME/ollama/models
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
-export SQLITE_HISTORY=$XDG_STATE_HOME/sqlite_history
 
 # Ensure essential Zsh directories exist
 mkdir -p "$XDG_STATE_HOME/zsh"
@@ -99,6 +98,7 @@ path=(
   "$HOME/.local/share/npm/bin"
   "$HOME/.local/share/cargo/bin"
   "$HOME/.local/share/go/bin"
+  "$XDG_DATA_HOME/nvim/mason/bin"
   "$HOME/Applications"
   $path
 )

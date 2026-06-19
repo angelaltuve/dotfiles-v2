@@ -102,7 +102,7 @@ alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort -h | tail -3000 
 alias jda='cd /home/angel/Documents/jupyter_notebooks/EDA_Heart && poetry run jupyter-lab'
 alias jda-colab='cd /home/angel/Documents/jupyter_notebooks/EDA_Heart && poetry run jupyter-lab --NotebookApp.allow_origin="https://colab.research.google.com" --NotebookApp.allow_credentials=True --port=8888 --NotebookApp.port_retries=0 --no-browser'
 
-alias oc='opencode'
+alias oc='firejail --profile=opencode --whitelist=$(pwd) opencode'
 alias lg='lazygit'
 alias bt='btop'
 alias top='btop'
@@ -116,7 +116,7 @@ alias trash='trash-put'
 alias tt='ttyper'
 
 # suffix / global
-alias -s json=jq
+alias -s json=bat
 alias -s md=bat
 alias -s txt=bat
 alias -s log=bat

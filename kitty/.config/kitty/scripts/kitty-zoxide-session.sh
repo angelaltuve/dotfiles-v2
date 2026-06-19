@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-kitty @ ls 2>/dev/null | jq -r '
-  .[]?.tabs[]?.windows[]?
-  | select(.session_name != null and .session_name != "")
-  | .session_name
-' | sort -u | fzf --prompt="Switch to session > " --height=40% | while read -r name; do
-  kitty @ goto_session "$name"
-done
+# Usa zoxide para seleccionar un directorio y abre una sesión de Kitty ahí
+dir=$(zoxide query -l | fzf --prompt="Zoxide session > " --height=40%)
+if [[ -n "$dir" ]]; then
+  name=$(basename "$dir")
+  kitty @ launch --type=tab --tab-title="$name" --cwd="$dir"
+fi

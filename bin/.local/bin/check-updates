@@ -6,5 +6,5 @@ count=$(checkupdates 2>/dev/null | wc -l)
 if [[ $count -eq 0 ]]; then
   echo '{"text": "", "tooltip": "System updated", "class": "updated"}'
 else
-  printf '{"text": " %s", "tooltip": "%s updates available\\nClick to update", "class": "pending"}\n' "$count" "$count"
+  printf '{"text": "  %s", "tooltip": "%s updates available\\nClick to update", "class": "pending"}\n' "$count" "$count"
 fi

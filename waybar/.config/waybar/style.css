@@ -7,8 +7,9 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: 'JetBrainsMono Nerd Font';
-  font-size: 12px;
+  font-family: 'Ubuntu', 'JetBrainsMono Nerd Font', 'Noto Color Emoji', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .modules-left {
@@ -25,6 +26,7 @@
   margin: 0 1.5px;
   min-width: 9px;
   color: @overlay0;
+  font-size: 14px;
 }
 
 #workspaces button.active {
@@ -69,7 +71,6 @@ tooltip {
 
 #custom-updates {
   margin: 0 7px;
-  font-size: 10px;
 }
 
 #clock {
@@ -96,8 +97,6 @@ tooltip {
 #custom-wireguard {
   min-width: 12px;
   margin: 0 7px;
-  font-size: 10px;
-  padding-bottom: 1px;
 }
 
 #custom-wireguard.active {
@@ -124,18 +123,7 @@ tooltip {
   color: @red;
 }
 
-#mpd {
-  margin: 0 5px;
-  font-size: 11px;
-}
 
-#mpd.playing {
-  color: @green;
-}
-
-#mpd.paused {
-  color: @overlay0;
-}
 
 #language {
   margin: 0 8px;

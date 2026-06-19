@@ -152,10 +152,13 @@ decrypt() {
     echo "Not an age file"
     return 1
   fi
-  tmpfile=$(mktemp)
-  pass show age/identity > "$tmpfile" 2>/dev/null
-  cat "$1" | age -d -i "$tmpfile" > "${1%.age}"
-  rm "$tmpfile"
+  local tmpfile=$(mktemp)
+  {
+    pass show age/identity > "$tmpfile" 2>/dev/null
+    age -d -i "$tmpfile" "$1" > "${1%.age}"
+  } always {
+    rm -f "$tmpfile"
+  }
 }
 
 update-tools() {

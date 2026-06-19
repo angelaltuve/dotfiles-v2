@@ -49,7 +49,8 @@
     "return-type": "json",
     "exec": "zeit-waybar-dmenu",
     "on-click": "zeit-waybar-dmenu click",
-    "interval": 10
+    "interval": 10,
+    "signal": 12
   },
   "custom/updates": {
     "exec": "check-updates",
@@ -161,19 +162,7 @@
     "signal": 11,
     "return-type": "json"
   },
-  "mpd": {
-    "format": "{stateIcon} {title}",
-    "format-disconnected": "",
-    "format-stopped": "",
-    "state-icons": {
-      "paused": "",
-      "playing": ""
-    },
-    "max-length": 50,
-    "on-click": "rmpc togglepause",
-    "on-click-right": "launch-tui rmpc",
-    "tooltip-format": "{title}\n{artist} — {album}"
-  },
+
   "custom/idle-indicator": {
     "on-click": "toggle-idle",
     "exec": "waybar-idle",

@@ -2,11 +2,17 @@
 
 DESC="update-$(date +%Y%m%d-%H%M)"
 
-if ! launch-floating-terminal-with-presentation yay -Syu; then
-    exit 1
-fi
+launch-floating-terminal-with-presentation bash -c "
+  ~/.local/bin/update-all
 
-snapper -c root create -c number -d "$DESC"
-snapper -c root cleanup number
+  echo -e '\n--- Tareas del sistema post-actualización ---'
+  echo 'Creando snapshot de Snapper...'
+  sudo snapper -c root create -c number -d \"$DESC\"
+  sudo snapper -c root cleanup number
+  
+  echo 'Actualizando GRUB...'
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-sudo grub-mkconfig -o /boot/grub/grub.cfg
+  echo -e '\nPress Enter to close.'
+  read
+"

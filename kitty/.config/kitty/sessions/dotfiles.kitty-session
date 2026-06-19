@@ -1,5 +1,4 @@
 layout tall
-cd ~
-launch --title "dotfiles"
+cd ~/.dotfiles
+launch
 focus
-focus_os_window

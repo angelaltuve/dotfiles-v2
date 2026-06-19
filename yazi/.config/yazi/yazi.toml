@@ -32,39 +32,34 @@ ueberzug_offset = [ 0, 0, 0, 0 ]
 [opener]
 edit = [
 	{ run = '$EDITOR "$@"', block = true, desc = "Edit file in EDITOR", for = "unix" },
-	{ run = "code -w %s",    desc = "code (block)", for = "windows", block = true },
 ]
 play = [
 	{ run = 'mpv --force-window "$@"', desc = "Play media in mpv", orphan = true, for = "unix" },
-	{ run = "xdg-open %s1",            desc = "Play", for = "linux", orphan = true },
 ]
 open = [
 	{ run = 'xdg-open "$1"', desc = "Open file with xdg-open", orphan = true, for = "unix" },
 ]
 reveal = [
 	{ run = 'xdg-open "$(dirname "$1")"', desc = "Open containing folder", for = "unix" },
-	{ run = "xdg-open %d1",                desc = "Reveal", for = "linux" },
 ]
 extract = [
-	{ run = 'ouch d -y %*', desc = "Extract here with ouch", for = "windows" },
 	{ run = 'ouch d -y "$@"', desc = "Extract here with ouch", for = "unix" },
-	{ run = "ya pub extract --list %s", desc = "Extract here (fallback)" },
 ]
 download = [
-	{ run = "ya emit download --open %S", desc = "Download and open" },
-	{ run = "ya emit download %S",        desc = "Download" },
+	{ run = 'ya emit download --open "$@"', desc = "Download and open", for = "unix" },
+	{ run = 'ya emit download "$@"',        desc = "Download", for = "unix" },
 ]
 ebook = [
-	{ run = 'zathura "$1"', desc = "Open eBook in Zathura", orphan = true, for = "unix" },
+	{ run = 'zathura "$@"', desc = "Open eBook in Zathura", orphan = true, for = "unix" },
 ]
 office = [
-	{ run = 'libreoffice "$1"', desc = "Open document in LibreOffice", orphan = true, for = "unix" },
+	{ run = 'libreoffice "$@"', desc = "Open document in LibreOffice", orphan = true, for = "unix" },
 ]
 sc-im = [
 	{ run = 'sc-im "$1"', desc = "Open spreadsheet in sc-im", block = true, for = "unix" },
 ]
 image = [
-	{ run = "imv %s", desc = "View image in imv", orphan = true, for = "unix" },
+	{ run = 'imv "$@"', desc = "View image in imv", orphan = true, for = "unix" },
 ]
 
 [open]

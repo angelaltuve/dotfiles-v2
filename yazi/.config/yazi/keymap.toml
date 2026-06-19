@@ -177,7 +177,8 @@ prepend_keymap = [
 
 	# File operations
 	{ on = ['c', 'm'], run = "plugin chmod", desc = "Chmod" },
-	{ on = "C", run = "plugin ouch zip", desc = "Compress" },
+	{ on = "C", run = 'shell "ouch c -y $@ archive.zip" --confirm', desc = "Compress archive" },
+	{ on = "E", run = 'shell "ouch d -y $@"', desc = "Decompress archive" },
 	{ on = "<C-d>", run = "plugin diff", desc = "Diff" },
 
 	# Clipboard

@@ -15,7 +15,7 @@ case "$cmd" in
     else
       configs=$(/usr/bin/sudo ls -1 /etc/wireguard/*.conf 2>/dev/null | xargs -n 1 basename | sed 's/\.conf//')
       [ -z "$configs" ] && exit 1
-      selected=$(printf "%s" "$configs" | ${DMENU:-bemenu} -p "WireGuard")
+      selected=$(printf "%s" "$configs" | $DMENU -p "WireGuard")
       [ -z "$selected" ] && exit 0
       down_all
       sleep 1

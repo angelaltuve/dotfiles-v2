@@ -1,41 +1,57 @@
-# general
+# General
 reload-period 15
 scrolloff 8
 scrollwrap true
 download-max-connections 500
+download-timeout 30
 user-agent "Mozilla/5.0 (X11; Linux x86_64)"
 notification-command notify-send
 database-analyze-on-startup true
 database-clean-on-startup true
 
-# display
+# Display
 status-show-menu-path false
 pager-centering true
 list-entry-date-format "%b %d %R"
 menu-item-sorting unread-desc
 menu-feed-sorting unread-desc
 
-# browser
+# Browser
 open-in-browser-command browser "%l"
 copy-to-clipboard-command auto
 
-# catppuccin mocha
-color-status            bold color183 default
-color-status-info       bold color75  default
-color-status-fail       bold color210 default
-color-list-section                color250 default
-color-list-section-selected       color252 color237
-color-list-section-unread         bold    color114 default
-color-list-feed                   color250 default
-color-list-feed-selected          color252 color237
-color-list-feed-unread            bold    color114 default
-color-list-feed-failed            bold    color210 default
-color-list-item                   color250 default
-color-list-item-selected          color252 color237
-color-list-item-unread            bold    color114 default
-color-list-item-important         bold    color183 default
+# Catppuccin Mocha
+# Status bar
+color-status                    bold    color183  default
+color-status-info               bold    color75   default
+color-status-fail               bold    color210  default
 
-# mpv for media
-bind  m exec setsid --fork mpv --force-window=immediate "%l" > /dev/null 2>&1
-bind  S exec ~/.local/bin/bookmark.sh "%l"
-bind  r exec kitty @ launch --type=window --cwd "$(pwd)" reader -i kitty "%l"
+# Sections
+color-list-section                      color250  default
+color-list-section-selected             color252  color237
+color-list-section-unread       bold    color114  default
+color-list-section-failed       bold    color210  default
+
+# Feeds
+color-list-feed                         color250  default
+color-list-feed-selected                color252  color237
+color-list-feed-unread          bold    color114  default
+color-list-feed-failed          bold    color210  default
+
+# Items
+color-list-item                         color250  default
+color-list-item-selected                color252  color237
+color-list-item-unread          bold    color114  default
+color-list-item-important       bold    color183  default
+
+# Keybinds
+# Media & utilities
+bind  m    exec  setsid --fork mpv --force-window=immediate "%l" > /dev/null 2>&1
+bind  S    exec  ~/.local/bin/bookmark.sh "%l"
+bind  r    exec  kitty @ launch --type=window --cwd "$(pwd)" reader -i kitty "%l"
+
+# Reload current feed / reload all
+bind  R    reload-all
+
+# Mark all as read in current feed/section
+bind  A    mark-read-all

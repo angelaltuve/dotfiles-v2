@@ -17,29 +17,34 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
 
+# Plugins that should load early
+zinit light zsh-users/zsh-completions
+
+# Completions initialization (Done ONCE)
 fpath+=("$XDG_DATA_HOME/zsh/completions")
-autoload -Uz compinit && compinit -C
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME"/zsh/zcompcache
-compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-$ZSH_VERSION
+autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-$ZSH_VERSION
 zmodload zsh/complist
 
-zinit ice lucid wait
-zinit snippet OMZP::git
-zinit snippet OMZP::git-extras
-zinit light k4rthik/git-cal
-zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
-zinit snippet OMZP::eza
-zinit snippet OMZP::gpg-agent
-zinit snippet OMZP::history
-zinit snippet OMZP::fancy-ctrl-z
-zinit snippet OMZP::fzf
-zinit snippet OMZP::zoxide
-zinit snippet OMZP::mise
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-autosuggestions
+# Load snippets asynchronously
+zinit wait lucid for \
+  OMZP::git \
+  OMZP::git-extras \
+  k4rthik/git-cal \
+  OMZP::sudo \
+  OMZP::archlinux \
+  OMZP::eza \
+  OMZP::gpg-agent \
+  OMZP::history \
+  OMZP::fancy-ctrl-z \
+  OMZP::fzf \
+  OMZP::zoxide \
+  OMZP::mise
+
+# Core functionality plugins (Order is important)
 zinit light Aloxaf/fzf-tab
-zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
 
 zinit cdreplay -q
 
@@ -77,3 +82,5 @@ setopt multios
 [ -f "$HOME/.config/shell/functions.zsh" ] && source "$HOME/.config/shell/functions.zsh"
 [ -f "$HOME/.config/shell/keybindings.zsh" ] && source "$HOME/.config/shell/keybindings.zsh"
 [ -f "$HOME/.config/shell/alias.zsh" ] && source "$HOME/.config/shell/alias.zsh"
+
+[ -n "$KITTY_INSTALLATION_DIR" ] && source "$KITTY_INSTALLATION_DIR/shell-integration/zsh/kitty.zsh"
